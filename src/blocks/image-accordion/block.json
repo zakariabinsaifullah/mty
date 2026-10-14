@@ -1,0 +1,57 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "mty/image-accordion",
+    "version": "1.0.0",
+    "title": "Image Accordion",
+    "category": "mty",
+    "icon": "images-alt2",
+    "description": "Display a series of images in an accordion format.",
+    "example": {},
+    "supports": {
+        "anchor": true,
+        "html": false,
+        "align": ["wide", "full"],
+        "spacing": {
+            "margin": true,
+            "padding": true,
+            "__experimentalDefaultControls": {
+                "margin": false,
+                "padding": false
+            }
+        }
+    },
+    "providesContext": {
+        "mty/showTitle": "showTitle",
+        "mty/titleTag": "titleTag"
+    },
+    "attributes": {
+        "resMode": {
+            "type": "string",
+            "default": "Desktop"
+        },
+        "blockStyle": {
+            "type": "object"
+        },
+        "itemsGap": {
+            "type": "object",
+            "default": {}
+        },
+        "contentMaxWidth": {
+            "type": "string"
+        },
+        "showTitle": {
+            "type": "boolean",
+            "default": true
+        },
+        "titleTag": {
+            "type": "string",
+            "default": "h4"
+        }
+    },
+    "textdomain": "mty",
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:./index.css",
+    "style": "file:./style-index.css",
+    "viewScript": "file:./view.js"
+}

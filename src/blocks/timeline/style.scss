@@ -1,0 +1,92 @@
+/**
+ * Timeline
+ *
+ * A grid of steps joined by one 1px line. Each step starts with a 12px square
+ * dot; its line runs across the step and the column gap to the next step's
+ * dot, and the last step's line runs to the end of its column. A highlighted
+ * step (`is-active`) draws its dot and line in the active colour.
+ * Columns come from the block (--mty-timeline-columns); tablet and mobile
+ * always stack the steps in one column.
+ */
+.wp-block-mty-timeline {
+    --mty-timeline-color: #ffffff;
+    --mty-timeline-active: #29a852;
+    --mty-timeline-gap: 24px;
+    display: grid;
+    grid-template-columns: repeat(var(--mty-timeline-columns, 4), minmax(0, 1fr));
+    gap: var(--mty-timeline-gap);
+
+    @media (max-width: 1024px) {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+.wp-block-mty-timeline-step {
+    --mty-timeline-step-color: var(--mty-timeline-color);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-width: 0;
+    margin: 0;
+
+    &.is-active {
+        --mty-timeline-step-color: var(--mty-timeline-active);
+    }
+
+    .mty-timeline-step__marker {
+        position: relative;
+        height: 12px;
+
+        // The square dot, drawn over the line.
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            width: 12px;
+            height: 12px;
+            background-color: var(--mty-timeline-step-color);
+        }
+
+        // The line, reaching across the gap to the next step's dot.
+        &::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: calc(100% + var(--mty-timeline-gap));
+            height: 1px;
+            transform: translateY(-50%);
+            background-color: var(--mty-timeline-step-color);
+        }
+    }
+
+    &:last-child .mty-timeline-step__marker::after {
+        width: 100%;
+    }
+
+    // Stacked steps: each line stays within its own step.
+    @media (max-width: 1024px) {
+        .mty-timeline-step__marker::after {
+            width: 100%;
+        }
+    }
+
+    // Mobile: no dots, only the line.
+    @media (max-width: 767px) {
+        .mty-timeline-step__marker::before {
+            display: none;
+        }
+    }
+
+    .mty-timeline-step__content {
+        > :first-child {
+            margin-top: 0;
+        }
+
+        > :last-child {
+            margin-bottom: 0;
+        }
+    }
+}

@@ -1,0 +1,25 @@
+.wp-block-mty-image-accordion {
+    // Rounded as a whole: the items sit edge to edge inside it.
+    overflow: hidden;
+    border-radius: 16px;
+
+    .mty-image-accordion {
+        display: flex;
+        gap: var(--dgap, 0px);
+    }
+
+    // Below the tablet breakpoint the items are too narrow to read side by
+    // side, so the accordion stacks and each item expands downwards instead.
+    @media (max-width: 781px) {
+        .mty-image-accordion {
+            flex-direction: column;
+            gap: var(--tgap, var(--dgap, 0px));
+        }
+    }
+
+    @media (max-width: 599px) {
+        .mty-image-accordion {
+            gap: var(--mgap, var(--tgap, var(--dgap, 0px)));
+        }
+    }
+}

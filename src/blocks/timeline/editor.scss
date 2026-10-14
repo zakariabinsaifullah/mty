@@ -1,0 +1,5 @@
+// Keep the editor's block wrappers from adding their own top margin to steps.
+.wp-block-mty-timeline > .wp-block-mty-timeline-step {
+    margin-top: 0;
+    margin-bottom: 0;
+}
