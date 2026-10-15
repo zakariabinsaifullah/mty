@@ -1496,3 +1496,106 @@ if ( ! function_exists( 'mty_enqueue_highlight_frontend_assets' ) ) :
 	}
 endif;
 add_action( 'enqueue_block_assets', 'mty_enqueue_highlight_frontend_assets' );
+
+
+// =============================================================================
+// Image — Figure Frame Extension
+// =============================================================================
+
+if ( ! function_exists( 'mty_enqueue_image_figure_frame_editor_assets' ) ) :
+	/**
+	 * Enqueues the image-figure-frame extension script (editor only).
+	 */
+	function mty_enqueue_image_figure_frame_editor_assets() {
+		$asset_file = get_theme_file_path( 'build/extensions/image-figure-frame/index.asset.php' );
+
+		if ( ! file_exists( $asset_file ) ) {
+			return;
+		}
+
+		$assets = require $asset_file;
+
+		wp_enqueue_script(
+			'mty-image-figure-frame-extension',
+			get_theme_file_uri( 'build/extensions/image-figure-frame/index.js' ),
+			$assets['dependencies'],
+			wp_get_theme()->get( 'Version' ),
+			true
+		);
+	}
+endif;
+add_action( 'enqueue_block_editor_assets', 'mty_enqueue_image_figure_frame_editor_assets' );
+
+
+if ( ! function_exists( 'mty_enqueue_image_figure_frame_frontend_assets' ) ) :
+	/**
+	 * Enqueues the image-figure-frame stylesheet (editor + front end).
+	 */
+	function mty_enqueue_image_figure_frame_frontend_assets() {
+		$style_file = get_theme_file_path( 'build/extensions/image-figure-frame/style-index.css' );
+
+		if ( ! file_exists( $style_file ) ) {
+			return;
+		}
+
+		wp_enqueue_style(
+			'mty-image-figure-frame-extension-style',
+			get_theme_file_uri( 'build/extensions/image-figure-frame/style-index.css' ),
+			array(),
+			wp_get_theme()->get( 'Version' )
+		);
+	}
+endif;
+add_action( 'enqueue_block_assets', 'mty_enqueue_image_figure_frame_frontend_assets' );
+
+
+if ( ! function_exists( 'mty_render_image_figure_frame' ) ) :
+	/**
+	 * Wraps the image (or its link) of a core/image block in a .mty-fig-frame
+	 * element and adds the "FIG. xx" label when the figFrame attribute is on.
+	 * The caption stays outside the frame.
+	 *
+	 * @param string $block_content The rendered block HTML.
+	 * @param array  $block         The block data including name and attributes.
+	 * @return string Modified block HTML.
+	 */
+	function mty_render_image_figure_frame( $block_content, $block ) {
+		if ( 'core/image' !== ( $block['blockName'] ?? '' ) || empty( $block['attrs']['figFrame'] ) || empty( $block_content ) ) {
+			return $block_content;
+		}
+
+		$attrs   = $block['attrs'];
+		$classes = array( 'mty-fig-frame' );
+		foreach ( array(
+			'figFrameBorder'  => 'has-fig-border',
+			'figFrameTicks'   => 'has-fig-ticks',
+			'figFrameOverlay' => 'has-fig-overlay',
+		) as $key => $class ) {
+			// These default to on, so a missing attribute means enabled.
+			if ( ! isset( $attrs[ $key ] ) || false !== $attrs[ $key ] ) {
+				$classes[] = $class;
+			}
+		}
+
+		$label = isset( $attrs['figLabel'] ) ? trim( (string) $attrs['figLabel'] ) : '';
+		$label_html = '' !== $label
+			? '<span class="mty-fig-frame__label" aria-hidden="true">' . esc_html( 'FIG. ' . $label ) . '</span>'
+			: '';
+
+		$open = '<span class="' . esc_attr( implode( ' ', $classes ) ) . '">';
+
+		// The image may be wrapped in a link; frame the link so it stays clickable.
+		$pattern = '/<a\b[^>]*>\s*<img\b[^>]*>\s*<\/a>|<img\b[^>]*>/i';
+		$updated = preg_replace_callback(
+			$pattern,
+			function ( $matches ) use ( $open, $label_html ) {
+				return $open . $matches[0] . $label_html . '</span>';
+			},
+			$block_content,
+			1
+		);
+
+		return null === $updated ? $block_content : $updated;
+	}
+endif;
+add_filter( 'render_block', 'mty_render_image_figure_frame', 10, 2 );

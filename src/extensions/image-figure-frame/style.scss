@@ -1,0 +1,138 @@
+/**
+ * Image — Figure Frame
+ *
+ * The Figma "figure" image style (e.g. "FIG. 02" in "What does an injury and
+ * insurance lawyer do?"):
+ * - 1px border, white at 25%
+ * - dark overlay (neutral darkest at 30%)
+ * - four white corner ticks, 14px long and 1px thick, 7px in from each corner
+ * - "FIG. 02" label: Open Sans 600, 11px, uppercase, 0.14em letter spacing,
+ *   16px from the top left corner
+ * Images in the frame are always square (no radius).
+ *
+ * Front end: the image (or its link) is wrapped in .mty-fig-frame with a
+ * .mty-fig-frame__label span (inc/extensions.php). Editor: the same look is
+ * drawn on the block wrapper (.mty-fig-frame-editor) with the label taken
+ * from its data-fig-label attribute.
+ */
+
+$fig-tick-color: var(--wp--preset--color--mty-white);
+$fig-ticks:
+    linear-gradient($fig-tick-color, $fig-tick-color) left 7px top 7px / 14px 1px no-repeat,
+    linear-gradient($fig-tick-color, $fig-tick-color) left 7px top 7px / 1px 14px no-repeat,
+    linear-gradient($fig-tick-color, $fig-tick-color) right 7px top 7px / 14px 1px no-repeat,
+    linear-gradient($fig-tick-color, $fig-tick-color) right 7px top 7px / 1px 14px no-repeat,
+    linear-gradient($fig-tick-color, $fig-tick-color) left 7px bottom 7px / 14px 1px no-repeat,
+    linear-gradient($fig-tick-color, $fig-tick-color) left 7px bottom 7px / 1px 14px no-repeat,
+    linear-gradient($fig-tick-color, $fig-tick-color) right 7px bottom 7px / 14px 1px no-repeat,
+    linear-gradient($fig-tick-color, $fig-tick-color) right 7px bottom 7px / 1px 14px no-repeat;
+$fig-overlay: var(--wp--preset--color--mty-neutral-darkest-30);
+$fig-border: 1px solid rgba(255, 255, 255, 0.25);
+
+@mixin fig-label {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    z-index: 3;
+    font-family: var(--wp--preset--font-family--open-sans);
+    font-size: 11px;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--wp--preset--color--mty-white);
+    pointer-events: none;
+}
+
+// Front end
+.mty-fig-frame {
+    position: relative;
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    line-height: 0;
+
+    > img,
+    > a > img,
+    > a {
+        display: block;
+    }
+
+    img {
+        border-radius: 0 !important;
+    }
+
+    &.has-fig-border {
+        border: $fig-border;
+    }
+
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+    }
+
+    &.has-fig-overlay::before {
+        z-index: 1;
+        background-color: $fig-overlay;
+    }
+
+    &.has-fig-ticks::after {
+        z-index: 2;
+        background: $fig-ticks;
+    }
+}
+
+.mty-fig-frame__label {
+    @include fig-label;
+}
+
+// Editor preview
+.wp-block-image.mty-fig-frame-editor {
+    position: relative;
+    width: fit-content;
+    max-width: 100%;
+
+    // fit-content would let the content layout's auto margins centre a narrow
+    // image; keep it on the content column's left edge, as on the front end.
+    &:not(.aligncenter):not(.alignleft):not(.alignright):not(.alignwide):not(.alignfull) {
+        margin-left: max(0px, calc((100% - var(--wp--style--global--content-size, 100%)) / 2)) !important;
+        margin-right: auto !important;
+    }
+
+    img {
+        border-radius: 0 !important;
+    }
+
+    &.has-fig-border img {
+        border: $fig-border;
+    }
+
+    &::before,
+    &::after {
+        position: absolute;
+        pointer-events: none;
+    }
+
+    &::before {
+        content: '';
+        inset: 0;
+        z-index: 2;
+        background: none;
+    }
+
+    &.has-fig-ticks::before {
+        background: $fig-ticks;
+    }
+
+    &.has-fig-overlay::before {
+        background-color: $fig-overlay;
+    }
+
+    &[data-fig-label]::after {
+        @include fig-label;
+        content: attr(data-fig-label);
+    }
+}

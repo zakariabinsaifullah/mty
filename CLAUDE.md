@@ -99,9 +99,10 @@ Style blocks through the options they already have, in this order:
     - Text Max Width
     - Iconic Button (Icon Settings panel on a Button: add an SVG icon before/after the label)
     - Group Full Height, Group Overlay Background and Group Global Hover
+    - Image Figure Frame (Image → Settings → **Figure Frame**; see section 6)
     - Kadence Featured Image Background (Row Layout) and Kadence Column Step Dot (Section → Advanced → "Add Step Dot" for the dot on numbered step cards: top edge on desktop, left edge on tablet/mobile; use the toggle, never type the `mty-step-dot` class by hand)
 
-**Border radius (global rule):** cards, images, groups/boxes with a background or border, videos, embeds and similar elements always use a **16px** border radius, whatever Figma shows. Set it through the block's own border/radius setting (Kadence Section `"borderRadius":[16,16,16,16]`; core blocks `"style":{"border":{"radius":"16px"}}`). Exceptions that keep their own theme-defined radius: buttons (square, 0 radius) and the Icon block's box (10px).
+**Border radius (global rule):** cards, images, groups/boxes with a background or border, videos, embeds and similar elements always use a **16px** border radius, whatever Figma shows. Set it through the block's own border/radius setting (Kadence Section `"borderRadius":[16,16,16,16]`; core blocks `"style":{"border":{"radius":"16px"}}`). Exceptions that keep their own theme-defined radius: buttons (square, 0 radius), images with the Figure Frame on (square) and the Icon block's box (10px).
 
 ## 5. No custom CSS or JS without permission
 
@@ -123,6 +124,11 @@ Style blocks through the options they already have, in this order:
     -   Check the result: the attachment's file should be `.webp` and it should have `_biio_savings` / `_biio_optimized_at` meta.
 -   **Icon block defaults** (match the Figma card icons): a **20px** icon, white (`mty-white`), centred in a **45×45px** box with a `mty-goblin` background and **10px** radius. These are the block's defaults, so a new Icon block needs no extra settings and no padding. Set only the desktop size (`"sizes":{"Desktop":20},"iconSize":20`); tablet and mobile inherit it.
 -   **Icon + title gap (global rule):** when an Icon block shows a title next to the icon, the gap between them is always **16px** (`"listGap":"16px"`). If you set it by script, also set `blockStyle["--list-gap"]` to `"16px"`: the block only recalculates `blockStyle` when it renders in the editor, so changing `listGap` alone can leave the old gap in the saved markup.
+-   **Figure frame (global rule):** images in the Figma design use a "figure" style: a faint 1px border, a dark overlay, four white corner ticks and a "FIG. 02" label top left. Recreate it with the Image block's **Figure Frame** panel (Settings tab), never with custom markup or CSS:
+    -   Turn on **Enable figure frame** and type the number from the design into **FIG value** (e.g. `02` shows "FIG. 02"). Leave the value empty if the design shows no label.
+    -   Switch off **Border**, **Corner ticks** or **Dark overlay** when the design leaves them out. For example, the "Meet James" portrait shows only the label.
+    -   Framed images are always square (0 radius), the exception to the 16px image radius rule.
+    -   Only core Image blocks have the panel. Images used as Kadence Section backgrounds can't be framed.
 -   never create custom image without permission
 
 ## 7. Color, Typography
