@@ -1,0 +1,33 @@
+/**
+ * Kadence Column — Step Dot
+ *
+ * The `mty-step-dot` class is added to kadence/column containers when the
+ * "Add Step Dot" toggle is enabled. The dot is orange with a white ring:
+ * - Desktop: on the section's top edge, lined up with the card's 32px padding.
+ * - Tablet and mobile (cards stacked in one column): on the left edge, level
+ *   with the first line of content (32px padding + half of a 14px/1.5 line).
+ */
+.wp-block-kadence-column.mty-step-dot {
+    position: relative;
+}
+
+.wp-block-kadence-column.mty-step-dot::before {
+    content: '';
+    position: absolute;
+    top: -4.5px;
+    left: 32px;
+    z-index: 1;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background-color: var(--wp--preset--color--mty-goblin);
+    box-shadow: 0 0 0 4px var(--wp--preset--color--mty-white);
+    pointer-events: none;
+}
+
+@media (max-width: 1024px) {
+    .wp-block-kadence-column.mty-step-dot::before {
+        top: 38px;
+        left: -4.5px;
+    }
+}

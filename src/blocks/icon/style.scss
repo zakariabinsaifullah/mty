@@ -1,0 +1,101 @@
+.wp-block-mty-icon {
+    display: flex;
+
+    &.justify-center {
+        justify-content: center;
+    }
+    &.justify-right {
+        justify-content: flex-end;
+    }
+    &.justify-left {
+        justify-content: flex-start;
+    }
+
+    /* A 45px box with the icon centred in it. The default fill and icon colour
+       come from the colour attribute defaults in block.json; the radius is set
+       here because core replaces the block's `style` attribute (and any default
+       on it) with its own. A radius picked in the sidebar is written inline, so
+       it still wins. min-* rather than a fixed size, so a larger icon or added
+       padding grows the box instead of overflowing it. */
+    .icon-container {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        min-width: 45px;
+        min-height: 45px;
+        border-radius: 10px;
+        line-height: 0;
+
+        // A radius of 0 isn't written inline, so save.js flags it with a class.
+        &.no-border-radius {
+            border-radius: 0;
+        }
+    }
+
+    /**
+     * Sizes cascade down: a breakpoint that was never given its own size falls
+     * back to the next larger one, so setting only the desktop size is enough.
+     */
+    svg {
+        width: 1em;
+        height: 1em;
+        font-size: var(--msize, var(--tsize, var(--dsize, 20px)));
+    }
+
+    /* "Keep SVG Aspect Ratio": the size sets the height and the width follows
+       the SVG's viewBox, so wide SVGs (logos) aren't boxed into a square. */
+    &.has-aspect-ratio svg {
+        width: auto;
+    }
+
+    &.is-fill svg {
+        fill: currentColor;
+    }
+
+    &.is-line svg path {
+        stroke: currentColor;
+    }
+
+    /* Icon + text wrapper */
+    .mty-icon-block-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--list-gap);
+
+        &.icon-valign-top {
+            align-items: flex-start;
+        }
+
+        &.icon-valign-center {
+            align-items: center;
+        }
+
+        &.icon-valign-bottom {
+            align-items: flex-end;
+        }
+    }
+
+    /* Heading */
+    .icon-heading {
+        color: var(--title-color);
+        font-size: var(--title-size);
+        font-family: var(--title-font-family);
+        margin: 0;
+    }
+
+    // desktop view
+    @media (min-width: 1025px) {
+        svg {
+            font-size: var(--dsize, 20px);
+        }
+    }
+
+    // tablet view
+    @media (min-width: 768px) and (max-width: 1024px) {
+        svg {
+            font-size: var(--tsize, var(--dsize, 20px));
+        }
+    }
+}
