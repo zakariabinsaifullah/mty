@@ -189,7 +189,7 @@
 }
 
 /* The theme's link element style (Open Sans 400, 1.5) would otherwise win over the
-   heading's Alexandria 700 / 1.2. */
+   heading's Alexandria 300 / 1.2. */
 .ipg-card.ipg-card--boxed .ipg-card__title a {
     font-family: inherit;
     font-weight: inherit;

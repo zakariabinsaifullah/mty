@@ -95,6 +95,7 @@ Style blocks through the options they already have, in this order:
 2. **The theme's presets from `theme.json`.** Never hard-code values that a preset already covers (see section 7 for the full set).
 3. **Registered block styles:** Button — Alternative, Outline (core) and Link; Group — Wrap Mobile.
 4. **The theme's editor extensions:**
+    - Highlight (rich text format: the **Highlight** button with the "A" icon in its own group on the block toolbar, next to Bold/Italic; not core's "Highlight" in the More menu). Makes the selected words semi-bold (600) in `mty-goblin`; another MTY colour can be picked in its popover. Use it for the coloured words in headings (e.g. "Key **takeaways.**", "Meet **James.**"); never colour or bold those words by hand.
     - Hover Color
     - Text Max Width
     - Iconic Button (Icon Settings panel on a Button: add an SVG icon before/after the label)
@@ -159,7 +160,7 @@ The site is **dark by default**: the body background is `mty-background` (#06060
 
 **Typography:**
 
--   **Headings (h1–h6):** Alexandria, weight **700**, line-height **1.2**, colour `mty-white`.
+-   **Headings (h1–h6):** Alexandria, weight **300 (Light)**, line-height **1.2**, colour `mty-white`. Coloured, semi-bold words in a heading ("Key **takeaways.**") use the Highlight format, never a manual weight or colour.
 -   **Body and paragraphs:** Open Sans, **16px** (`mty-regular`), weight **400**, line-height **1.5**, colour `mty-white`. Links are white too and turn `mty-goblin` on hover.
 -   **Heading and large text sizes are fluid** (mobile → desktop, scaling between 375px and 1440px viewports):
 

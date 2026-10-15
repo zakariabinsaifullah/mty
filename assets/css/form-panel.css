@@ -179,7 +179,7 @@
 .mty-form-panel__title {
     font-family: var(--wp--preset--font-family--alexandria, "Alexandria", sans-serif);
     font-size: var(--wp--preset--font-size--mty-heading-four, 36px);
-    font-weight: 700;
+    font-weight: 300;
     line-height: 1.2;
     color: var(--wp--preset--color--mty-thunder, #231F20);
     margin: 0 0 16px;

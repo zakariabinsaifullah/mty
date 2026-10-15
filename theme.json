@@ -1104,7 +1104,7 @@
                     "fontFamily": "var(--wp--preset--font-family--alexandria)",
                     "fontSize": "var(--wp--preset--font-size--mty-heading-one)",
                     "fontStyle": "normal",
-                    "fontWeight": "700",
+                    "fontWeight": "300",
                     "lineHeight": "1.2"
                 },
                 "color": {
@@ -1116,7 +1116,7 @@
                     "fontFamily": "var(--wp--preset--font-family--alexandria)",
                     "fontSize": "var(--wp--preset--font-size--mty-heading-two)",
                     "fontStyle": "normal",
-                    "fontWeight": "700",
+                    "fontWeight": "300",
                     "lineHeight": "1.2"
                 },
                 "color": {
@@ -1128,7 +1128,7 @@
                     "fontFamily": "var(--wp--preset--font-family--alexandria)",
                     "fontSize": "var(--wp--preset--font-size--mty-heading-three)",
                     "fontStyle": "normal",
-                    "fontWeight": "700",
+                    "fontWeight": "300",
                     "lineHeight": "1.2"
                 },
                 "color": {
@@ -1140,7 +1140,7 @@
                     "fontFamily": "var(--wp--preset--font-family--alexandria)",
                     "fontSize": "var(--wp--preset--font-size--mty-heading-four)",
                     "fontStyle": "normal",
-                    "fontWeight": "700",
+                    "fontWeight": "300",
                     "lineHeight": "1.2"
                 },
                 "color": {
@@ -1152,7 +1152,7 @@
                     "fontFamily": "var(--wp--preset--font-family--alexandria)",
                     "fontSize": "var(--wp--preset--font-size--mty-heading-five)",
                     "fontStyle": "normal",
-                    "fontWeight": "700",
+                    "fontWeight": "300",
                     "letterSpacing": "0px",
                     "lineHeight": "1.2"
                 },
@@ -1165,7 +1165,7 @@
                     "fontFamily": "var(--wp--preset--font-family--alexandria)",
                     "fontSize": "var(--wp--preset--font-size--mty-heading-six)",
                     "fontStyle": "normal",
-                    "fontWeight": "700",
+                    "fontWeight": "300",
                     "letterSpacing": "0px",
                     "lineHeight": "1.2",
                     "textTransform": "none"
@@ -1181,7 +1181,7 @@
                 "typography": {
                     "fontFamily": "var(--wp--preset--font-family--alexandria)",
                     "fontStyle": "normal",
-                    "fontWeight": "700",
+                    "fontWeight": "300",
                     "letterSpacing": "0px",
                     "lineHeight": "1.2"
                 }

@@ -1599,3 +1599,54 @@ if ( ! function_exists( 'mty_render_image_figure_frame' ) ) :
 	}
 endif;
 add_filter( 'render_block', 'mty_render_image_figure_frame', 10, 2 );
+
+
+// =============================================================================
+// Highlight — Rich Text Format Extension
+// =============================================================================
+
+if ( ! function_exists( 'mty_enqueue_highlight_editor_assets' ) ) :
+	/**
+	 * Enqueues the highlight format script (editor only).
+	 */
+	function mty_enqueue_highlight_editor_assets() {
+		$asset_file = get_theme_file_path( 'build/extensions/highlight/index.asset.php' );
+
+		if ( ! file_exists( $asset_file ) ) {
+			return;
+		}
+
+		$assets = require $asset_file;
+
+		wp_enqueue_script(
+			'mty-highlight-extension',
+			get_theme_file_uri( 'build/extensions/highlight/index.js' ),
+			$assets['dependencies'],
+			wp_get_theme()->get( 'Version' ),
+			true
+		);
+	}
+endif;
+add_action( 'enqueue_block_editor_assets', 'mty_enqueue_highlight_editor_assets' );
+
+
+if ( ! function_exists( 'mty_enqueue_highlight_frontend_assets' ) ) :
+	/**
+	 * Enqueues the highlight stylesheet (editor + front end).
+	 */
+	function mty_enqueue_highlight_frontend_assets() {
+		$style_file = get_theme_file_path( 'build/extensions/highlight/style-index.css' );
+
+		if ( ! file_exists( $style_file ) ) {
+			return;
+		}
+
+		wp_enqueue_style(
+			'mty-highlight-extension-style',
+			get_theme_file_uri( 'build/extensions/highlight/style-index.css' ),
+			array(),
+			wp_get_theme()->get( 'Version' )
+		);
+	}
+endif;
+add_action( 'enqueue_block_assets', 'mty_enqueue_highlight_frontend_assets' );
