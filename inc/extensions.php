@@ -1650,3 +1650,101 @@ if ( ! function_exists( 'mty_enqueue_highlight_frontend_assets' ) ) :
 	}
 endif;
 add_action( 'enqueue_block_assets', 'mty_enqueue_highlight_frontend_assets' );
+
+
+// =============================================================================
+// Pointer Extension (Group, Kadence Section)
+// =============================================================================
+
+if ( ! function_exists( 'mty_enqueue_pointer_editor_assets' ) ) :
+	/**
+	 * Enqueues the pointer extension script (editor only).
+	 */
+	function mty_enqueue_pointer_editor_assets() {
+		$asset_file = get_theme_file_path( 'build/extensions/pointer/index.asset.php' );
+
+		if ( ! file_exists( $asset_file ) ) {
+			return;
+		}
+
+		$assets = require $asset_file;
+
+		wp_enqueue_script(
+			'mty-pointer-extension',
+			get_theme_file_uri( 'build/extensions/pointer/index.js' ),
+			$assets['dependencies'],
+			wp_get_theme()->get( 'Version' ),
+			true
+		);
+	}
+endif;
+add_action( 'enqueue_block_editor_assets', 'mty_enqueue_pointer_editor_assets' );
+
+
+if ( ! function_exists( 'mty_enqueue_pointer_frontend_assets' ) ) :
+	/**
+	 * Enqueues the pointer stylesheet (editor + front end).
+	 */
+	function mty_enqueue_pointer_frontend_assets() {
+		$style_file = get_theme_file_path( 'build/extensions/pointer/style-index.css' );
+
+		if ( ! file_exists( $style_file ) ) {
+			return;
+		}
+
+		wp_enqueue_style(
+			'mty-pointer-extension-style',
+			get_theme_file_uri( 'build/extensions/pointer/style-index.css' ),
+			array(),
+			wp_get_theme()->get( 'Version' )
+		);
+	}
+endif;
+add_action( 'enqueue_block_assets', 'mty_enqueue_pointer_frontend_assets' );
+
+
+if ( ! function_exists( 'mty_render_pointer' ) ) :
+	/**
+	 * Adds the pointer classes, custom properties and a .mty-pointer element to
+	 * core/group and kadence/column blocks that have the pointer turned on.
+	 *
+	 * @param string $block_content The rendered block HTML.
+	 * @param array  $block         The block data including name and attributes.
+	 * @return string Modified block HTML.
+	 */
+	function mty_render_pointer( $block_content, $block ) {
+		$name = $block['blockName'] ?? '';
+		if ( ! in_array( $name, array( 'core/group', 'kadence/column' ), true ) || empty( $block['attrs']['pointer'] ) || empty( $block_content ) ) {
+			return $block_content;
+		}
+
+		$attrs     = $block['attrs'];
+		$direction = ( $attrs['pointerDirection'] ?? 'right' ) === 'left' ? 'left' : 'right';
+		$size      = ( $attrs['pointerSize'] ?? 'small' ) === 'large' ? 'large' : 'small';
+		$length    = isset( $attrs['pointerLength'] ) ? absint( $attrs['pointerLength'] ) : 84;
+		$vars      = '--mty-pointer-length:' . $length . 'px';
+		if ( ( $attrs['pointerPosition'] ?? 'middle' ) === 'top' ) {
+			$vars .= ';--mty-pointer-top:' . ( isset( $attrs['pointerOffset'] ) ? absint( $attrs['pointerOffset'] ) : 45 ) . 'px';
+		}
+
+		$processor = new WP_HTML_Tag_Processor( $block_content );
+		if ( ! $processor->next_tag() ) {
+			return $block_content;
+		}
+		$processor->add_class( 'has-mty-pointer' );
+		$processor->add_class( 'is-pointer-' . $direction );
+		$processor->add_class( 'is-pointer-' . $size );
+		$style = rtrim( (string) $processor->get_attribute( 'style' ), '; ' );
+		$processor->set_attribute( 'style', ( $style ? $style . ';' : '' ) . $vars );
+		$block_content = $processor->get_updated_html();
+
+		// The pointer element goes last inside the block's outer element.
+		$close = strrpos( $block_content, '</' );
+		if ( false === $close ) {
+			return $block_content;
+		}
+
+		return substr( $block_content, 0, $close ) . '<span class="mty-pointer" aria-hidden="true"></span>' . substr( $block_content, $close );
+	}
+endif;
+add_filter( 'render_block', 'mty_render_pointer', 10, 2 );
