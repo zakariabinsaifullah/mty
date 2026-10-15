@@ -36,6 +36,7 @@ Follow these rules whenever you design or build a section, pattern, template or 
 
 -   Wrap every section in a **Kadence Row Layout** block (`kadence/rowlayout`).
 -   Don't use `core/group`, `core/cover` or `core/columns` as the outer container of a section.
+-   **Top-level width (global rule):** every top-level Row Layout (the section wrapper) is set to **Full Width** alignment (`"align":"full"`) with **Inherit Max Width from Theme?** turned on (`"inheritMaxWidth":true`), so its background spans the screen and its content follows the theme's 1310px content width. Never type a custom Max Width on it. Nested Row Layouts don't get this.
 -   **Global rule:** don't give blocks custom names (no `"metadata":{"name":...}`). Leave every block with its default name in the List View; the user renames blocks themselves if needed.
 
 ## 2. Block priority
@@ -61,7 +62,7 @@ Pick blocks in this order, and move down a level only when the level above can't
 -   but in case of same background based sections like two sections, both have same background, then use **Inner Space** 100px in total (50px-50px) while on tablet it will be (35px-35px)
 -   **Section title group (global rule):** wrap a section's title and its description (if any) in a **Group** (`core/group`), and put the **50px** space below them on that Group as its bottom margin, never on the heading or on the last paragraph. The Group's **Block spacing is always 12px** (`blockGap: 12px`), whatever spacing Figma shows between title and description; per the block-spacing rule, **leave the title's and description's margins unset** (never 0), or the 12px won't apply. Group: `"style":{"spacing":{"blockGap":"12px","margin":{"top":"0","bottom":"50px"}}}`. This applies on every device, and also when there's only a title (the Group still carries the 50px).
 -   Content width is **1310px**; wide width is **1440px** (the Figma frame width).
--   Inner padding for any group/card is always **32px**
+-   Inner padding for cards is **32px** by default; boxes that Figma pads more tightly (e.g. the 12px × 20px boxed section titles) keep the Figma padding
 -   for 2 columns section, the columns gap is 70px where row gap is 50px
 -   for 3 columns section, the columns gap is 24px and row gap is also 24px
 -   on tablet and mobile all columns will have 1 column
@@ -75,7 +76,7 @@ Pick blocks in this order, and move down a level only when the level above can't
 -   Cards in the same row are always **equal height**. If the design gives a card height, set it as the Section's min height. Kadence adds padding on top of min height, so enter the design height minus the top and bottom padding (for example, 443px card − 64px padding = `"height":[379]`).
 -   Card content is vertically aligned to the **bottom** (`"verticalAlignment":"bottom"`).
 -   Card inner padding is an equal **32px** on all sides (`"padding":[32,32,32,32]`).
--   Card corner radius is **16px** (`"borderRadius":[16,16,16,16]`), per the global radius rule in section 4.
+-   Cards are **square** (no border radius), per the global radius rule in section 4.
 -   **Content gap (global rule):** the gap between stacked content items (icon → heading → description) is always **24px**. Set it with the Section's **Vertical Gap** setting (`"rowGapVariable":["custom","",""],"rowGap":[24,"",""],"rowGapUnit":"px"`), not with block margins.
 -   **Numbered items (global rule):** in a content item made of a number + heading + description (e.g. process steps "01 / 02 / 03"), the three are always **24px** apart (the content gap). Put them in one vertical Group with `blockGap: 24px`, leaving the items' margins unset (block-spacing rule); anything after the item (a divider, a button) sits outside that Group with its own gap.
 -   **Block spacing: never set child margins (global rule):** when spacing comes from a core block's **Block spacing** (`blockGap` on a Group, Row, Stack, Buttons, etc.), **never set a margin on the blocks inside it — not even 0**. Leave headings, paragraphs, etc. with their margins unset. WordPress applies block spacing as each block's top margin (and clears the theme's default margins itself), so a block's own `"margin":{"top":"0"...}` overrides it and the spacing disappears.
@@ -103,7 +104,7 @@ Style blocks through the options they already have, in this order:
     - Image Figure Frame (Image → Settings → **Figure Frame**; see section 6)
     - Kadence Featured Image Background (Row Layout) and Kadence Column Step Dot (Section → Advanced → "Add Step Dot" for the dot on numbered step cards: top edge on desktop, left edge on tablet/mobile; use the toggle, never type the `mty-step-dot` class by hand)
 
-**Border radius (global rule):** cards, images, groups/boxes with a background or border, videos, embeds and similar elements always use a **16px** border radius, whatever Figma shows. Set it through the block's own border/radius setting (Kadence Section `"borderRadius":[16,16,16,16]`; core blocks `"style":{"border":{"radius":"16px"}}`). Exceptions that keep their own theme-defined radius: buttons (square, 0 radius), images with the Figure Frame on (square) and the Icon block's box (10px).
+**Border radius (global rule):** the MTY design is square. **Images and buttons always have a 0 border radius**, and so do cards, groups/boxes with a background or border, videos, embeds and similar elements (leave the radius setting empty or 0; the theme already makes buttons and framed images square). The only rounded element is the Icon block's box (10px).
 
 ## 5. No custom CSS or JS without permission
 
@@ -128,7 +129,7 @@ Style blocks through the options they already have, in this order:
 -   **Figure frame (global rule):** images in the Figma design use a "figure" style: a faint 1px border, a dark overlay, four white corner ticks and a "FIG. 02" label top left. Recreate it with the Image block's **Figure Frame** panel (Settings tab), never with custom markup or CSS:
     -   Turn on **Enable figure frame** and type the number from the design into **FIG value** (e.g. `02` shows "FIG. 02"). Leave the value empty if the design shows no label.
     -   Switch off **Border**, **Corner ticks** or **Dark overlay** when the design leaves them out. For example, the "Meet James" portrait shows only the label.
-    -   Framed images are always square (0 radius), the exception to the 16px image radius rule.
+    -   Framed images are square, like every image (section 4).
     -   Only core Image blocks have the panel. Images used as Kadence Section backgrounds can't be framed.
 -   never create custom image without permission
 
