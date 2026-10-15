@@ -63,6 +63,14 @@ $white: var(--wp--preset--color--mty-white);
     display: none;
 }
 
+// Kadence gives every column z-index: 1, so a column later in the row (the
+// image) would paint over a pointer reaching into it. Lift the column that
+// holds the pointer.
+.wp-block-kadence-column:has(.mty-pointer),
+.wp-block-kadence-column:has(.mty-pointer-editor) {
+    z-index: 2;
+}
+
 @media (min-width: 1025px) {
     .mty-pointer {
         display: block;
