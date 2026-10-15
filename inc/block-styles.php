@@ -20,6 +20,14 @@ if ( ! function_exists( 'mty_block_styles' ) ) :
 			)
 		);
 
+		register_block_style(
+			'core/group',
+			array(
+				'name'  => 'plain-links',
+				'label' => __( 'Plain Links', 'mty' ),
+			)
+		);
+
 
 		register_block_style(
 			'core/button',

@@ -94,7 +94,7 @@ Style blocks through the options they already have, in this order:
 
 1. **Block settings in the editor sidebar:** typography, colour, spacing, border, layout.
 2. **The theme's presets from `theme.json`.** Never hard-code values that a preset already covers (see section 7 for the full set).
-3. **Registered block styles:** Button — Alternative, Outline (core) and Link; Group — Wrap Mobile.
+3. **Registered block styles:** Button — Alternative, Outline (core) and Link; Group — Wrap Mobile and Plain Links (links inside aren't underlined; use it for link lists like "On this page"). Links inherit their text's font, weight and line-height, so set the weight on the paragraph, not the link.
 4. **The theme's editor extensions:**
     - Highlight (rich text format: the **Highlight** button with the "A" icon in its own group on the block toolbar, next to Bold/Italic; not core's "Highlight" in the More menu). Makes the selected words semi-bold (600) in `mty-goblin`; another MTY colour can be picked in its popover. Use it for the coloured words in headings (e.g. "Key **takeaways.**", "Meet **James.**"); never colour or bold those words by hand.
     - Hover Color

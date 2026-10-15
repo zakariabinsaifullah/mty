@@ -98,6 +98,15 @@ header.wp-block-kadence-rowlayout::before {
     }
 }
 
+/*
+ * Group — Plain Links: links inside keep their text's weight and get no
+ * underline (paragraph links are underlined by default in style.css). For
+ * link lists such as "On this page".
+ */
+.wp-block-group.is-style-plain-links a {
+    text-decoration: none;
+}
+
 /* Kadence Codes */
 
 .kb-table p {
