@@ -189,6 +189,103 @@ ul.is-style-mega-links-large a::after {
     font-weight: 400;
 }
 
+/*
+ * Mega menus (Kadence Navigation items with "Mega Menu" on, width
+ * "Container").
+ *
+ * Kadence positions a container-width panel against the nearest positioned
+ * parent, which in this header is the menu's own column. Make the header row
+ * the reference instead, so every panel spans the row (1310px content + the
+ * row's side padding) and starts on the white rule under the nav, as in Figma.
+ */
+.wp-block-kadence-header .kadence-header-row-inner:has(.kadence-menu-mega-enabled) {
+    position: relative;
+}
+
+.wp-block-kadence-header .kadence-header-row-inner:has(.kadence-menu-mega-enabled) .wp-block-kadence-header-section,
+.wp-block-kadence-header .kadence-header-row-inner:has(.kadence-menu-mega-enabled) .wp-block-kadence-header-column,
+.wp-block-kadence-header .kadence-header-row-inner:has(.kadence-menu-mega-enabled) .wp-block-kadence-navigation,
+.wp-block-kadence-header .kadence-header-row-inner:has(.kadence-menu-mega-enabled) .kb-navigation,
+.wp-block-kadence-header .kadence-header-row-inner:has(.kadence-menu-mega-enabled) .kb-navigation > li.kadence-menu-mega-enabled {
+    position: static;
+}
+
+.wp-block-kadence-header .kb-navigation > li.kb-menu-mega-width-container > .sub-menu.mega-menu {
+    top: 100%;
+    right: 0 !important;
+    left: 0 !important;
+    width: auto !important;
+    max-width: none;
+    transform: none !important;
+    margin: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+/* Parent item: "+" instead of Kadence's chevron, "−" while open; text and
+   sign Goblin while open. */
+.wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled > .kb-link-wrap {
+    position: relative;
+}
+
+.wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled .kb-nav-dropdown-toggle-btn svg {
+    display: none;
+}
+
+.wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled .kb-nav-dropdown-toggle-btn {
+    width: auto;
+    margin-left: 8px;
+    padding: 0;
+    color: inherit;
+    font-family: var(--wp--preset--font-family--open-sans);
+    font-size: var(--wp--preset--font-size--mty-small);
+    font-weight: 400;
+    line-height: 1;
+}
+
+.wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled .kb-nav-dropdown-toggle-btn::before {
+    content: "+";
+}
+
+.wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled:is(:hover, :focus-within, .menu-item--toggled-on) > .kb-link-wrap,
+.wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled:is(:hover, :focus-within, .menu-item--toggled-on) > .kb-link-wrap .kb-nav-link-content {
+    color: var(--wp--preset--color--mty-goblin);
+}
+
+.wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled:is(:hover, :focus-within, .menu-item--toggled-on) .kb-nav-dropdown-toggle-btn::before {
+    content: "\2212";
+}
+
+/* 2px Goblin underline on the white rule (the link area ends 25px above the
+   row's bottom edge: 24px padding + the 1px rule). */
+.wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled > .kb-link-wrap::after {
+    content: "";
+    position: absolute;
+    top: calc(100% + 23px);
+    right: 0;
+    left: 0;
+    height: 2px;
+    background-color: var(--wp--preset--color--mty-goblin);
+    opacity: 0;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+.wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled:is(:hover, :focus-within, .menu-item--toggled-on) > .kb-link-wrap::after {
+    opacity: 1;
+}
+
+/* Invisible bridge over the 25px between the link and the panel, so the
+   panel stays open while the pointer moves down into it. */
+.wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled > .kb-link-wrap::before {
+    content: "";
+    position: absolute;
+    top: 100%;
+    right: -20px;
+    left: -20px;
+    height: 26px;
+}
+
 /* Kadence Codes */
 
 .kb-table p {
