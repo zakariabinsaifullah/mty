@@ -14,8 +14,8 @@
  * process works.").
  *
  * "Highlight on hover" (`has-hover-highlight`, desktop): the hovered step gets
- * the highlighted look and the highlighted step returns to normal while
- * another step is hovered.
+ * the highlighted colours (its line keeps its normal 1px thickness) and the
+ * highlighted step returns to normal while another step is hovered.
  *
  * Columns come from the block (--mty-timeline-columns). Tablet and mobile
  * stack the steps as a plain list (Figma mobile "How we move your case."):
@@ -48,11 +48,17 @@
     min-width: 0;
     margin: 0;
 
-    &.is-active,
-    .has-hover-highlight > &:hover {
+    &.is-active {
         --mty-timeline-dot-color: var(--mty-timeline-active);
         --mty-timeline-line-color: var(--mty-timeline-active-line, var(--mty-timeline-color));
         --mty-timeline-line-height: var(--mty-timeline-active-line-height, 1px);
+    }
+
+    // Hover only recolours the dot and line; the line keeps its normal
+    // thickness (1px, or the highlighted step's own bar).
+    .has-hover-highlight > &:hover {
+        --mty-timeline-dot-color: var(--mty-timeline-active);
+        --mty-timeline-line-color: var(--mty-timeline-active-line, var(--mty-timeline-color));
     }
 
     // While another step is hovered, the highlighted step looks normal.
