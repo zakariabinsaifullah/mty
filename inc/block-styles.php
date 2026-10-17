@@ -30,6 +30,22 @@ if ( ! function_exists( 'mty_block_styles' ) ) :
 
 
 		register_block_style(
+			'core/list',
+			array(
+				'name'  => 'mega-links',
+				'label' => __( 'Mega Links', 'mty' ),
+			)
+		);
+
+		register_block_style(
+			'core/list',
+			array(
+				'name'  => 'mega-links-large',
+				'label' => __( 'Mega Links: Large', 'mty' ),
+			)
+		);
+
+		register_block_style(
 			'core/button',
 			array(
 				'name'  => 'alternative',

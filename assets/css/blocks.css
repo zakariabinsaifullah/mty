@@ -107,6 +107,88 @@ header.wp-block-kadence-rowlayout::before {
     text-decoration: none;
 }
 
+/*
+ * Mega menu link lists (List block styles).
+ *
+ * Mega Links: a plain list of links (practice areas, cities), 16px Open Sans,
+ * white; on hover a link turns Goblin and an arrow slides in after it.
+ * Mega Links: Large: the big links in the About Us panel (About the Firm, Our
+ * Team, Contact Us), Alexandria semi-bold with the arrow always on the right
+ * and a faint divider between items.
+ */
+ul.is-style-mega-links,
+ul.is-style-mega-links-large {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+ul.is-style-mega-links > li + li {
+    margin-top: 12px;
+}
+
+ul.is-style-mega-links a,
+ul.is-style-mega-links-large a {
+    color: var(--wp--preset--color--mty-white);
+    text-decoration: none;
+    transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+ul.is-style-mega-links a {
+    font-size: var(--wp--preset--font-size--mty-regular);
+}
+
+ul.is-style-mega-links a::after {
+    content: "\2192";
+    display: inline-block;
+    margin-left: 10px;
+    opacity: 0;
+    transform: translateX(-6px);
+    transition:
+        opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+ul.is-style-mega-links a:hover,
+ul.is-style-mega-links a:focus-visible,
+ul.is-style-mega-links-large a:hover,
+ul.is-style-mega-links-large a:focus-visible {
+    color: var(--wp--preset--color--mty-goblin);
+}
+
+ul.is-style-mega-links a:hover::after,
+ul.is-style-mega-links a:focus-visible::after {
+    opacity: 1;
+    transform: none;
+}
+
+ul.is-style-mega-links-large > li + li {
+    border-top: 1px solid var(--wp--preset--color--mty-white-15);
+}
+
+ul.is-style-mega-links-large a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 0;
+    font-family: var(--wp--preset--font-family--alexandria);
+    font-size: var(--wp--preset--font-size--mty-heading-five);
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+ul.is-style-mega-links-large > li:first-child a {
+    padding-top: 0;
+}
+
+ul.is-style-mega-links-large a::after {
+    content: "\2192";
+    font-family: var(--wp--preset--font-family--open-sans);
+    font-size: var(--wp--preset--font-size--mty-regular);
+    font-weight: 400;
+}
+
 /* Kadence Codes */
 
 .kb-table p {

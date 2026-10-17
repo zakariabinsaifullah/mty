@@ -31,3 +31,16 @@ if ( ! function_exists( 'mty_editor_style' ) ) :
 	}
 endif;
 add_action( 'after_setup_theme', 'mty_editor_style' );
+
+
+if ( ! function_exists( 'mty_page_excerpts' ) ) :
+	/**
+	 * Enables excerpts on pages. The attorney bio pages under Our Team use the
+	 * excerpt for their role ("Attorney, Mobile, Alabama"), which the About Us
+	 * mega menu's team list shows under each name.
+	 */
+	function mty_page_excerpts() {
+		add_post_type_support( 'page', 'excerpt' );
+	}
+endif;
+add_action( 'init', 'mty_page_excerpts' );
