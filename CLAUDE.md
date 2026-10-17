@@ -106,7 +106,7 @@ Style blocks through the options they already have, in this order:
 
 1. **Block settings in the editor sidebar:** typography, colour, spacing, border, layout.
 2. **The theme's presets from `theme.json`.** Never hard-code values that a preset already covers (see section 7 for the full set).
-3. **Registered block styles:** Button — Alternative, Outline (core) and Link; List — Mega Links and Mega Links: Large (mega menu link lists); Group — Wrap Mobile and Plain Links (links inside aren't underlined; use it for link lists like "On this page"). Links inherit their text's font, weight and line-height, so set the weight on the paragraph, not the link.
+3. **Registered block styles:** Button — Alternative, Outline (core) and Link; List — Mega Links and Mega Links: Large (mega menu link lists); Post Template — **Card Grid** (Query Loop card grids: Grid layout 3 columns, cards stretch to the row height, a lone last card spans the row, 1 column at 1024px and below); Group — Wrap Mobile and Plain Links (links inside aren't underlined; use it for link lists like "On this page"). Links inherit their text's font, weight and line-height, so set the weight on the paragraph, not the link.
 4. **The theme's editor extensions:**
     - Highlight (rich text format: the **Highlight** button with the "A" icon in its own group on the block toolbar, next to Bold/Italic; not core's "Highlight" in the More menu). Makes the selected words semi-bold (600) in `mty-goblin`; another MTY colour can be picked in its popover. Use it for the coloured words in headings (e.g. "Key **takeaways.**", "Meet **James.**"); never colour or bold those words by hand.
     - Hover Color
@@ -143,7 +143,7 @@ Style blocks through the options they already have, in this order:
     -   Turn on **Enable figure frame** and type the number from the design into **FIG value** (e.g. `02` shows "FIG. 02"). Leave the value empty if the design shows no label.
     -   Switch off **Border**, **Corner ticks** or **Dark overlay** when the design leaves them out. For example, the "Meet James" portrait shows only the label.
     -   Framed images are square, like every image (section 4).
-    -   Only core Image blocks have the panel. Images used as Kadence Section backgrounds can't be framed.
+    -   Core Image and **Post Featured Image** blocks have the panel. Images used as Kadence Section backgrounds can't be framed. On Post Featured Image (Query Loop cards, e.g. Our Team headshots) **Post title as label** shows "[HEADSHOT: NAME]" (prefix editable; the editor shows "Post title" in its place), and a post without a featured image shows an empty faint box (White 5%) with the ticks at the block's height.
 -   never create custom image without permission
 
 ## 7. Color, Typography

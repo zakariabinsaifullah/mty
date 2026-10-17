@@ -108,6 +108,34 @@ header.wp-block-kadence-rowlayout::before {
 }
 
 /*
+ * Post Template — Card Grid: for Query Loop card grids (e.g. the Our Team
+ * attorney cards). Use with the Grid layout set to 3 columns. Each card
+ * stretches to the row's height (a Group inside with Full Height fills it), a
+ * card left alone in the last row spans the full width (Sean's card in
+ * Figma), and at 1024px and below the cards stack in one column.
+ */
+.wp-block-post-template.is-style-card-grid > li {
+    display: flex;
+    flex-direction: column;
+}
+
+.wp-block-post-template.is-style-card-grid > li > * {
+    flex-grow: 1;
+}
+
+@media (min-width: 1025px) {
+    .wp-block-post-template.is-style-card-grid > li:last-child:nth-child(3n + 1) {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 1024px) {
+    .wp-block-post-template.is-style-card-grid.is-layout-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+/*
  * Mega menu link lists (List block styles).
  *
  * Mega Links: a plain list of links (practice areas, cities), 16px Open Sans,

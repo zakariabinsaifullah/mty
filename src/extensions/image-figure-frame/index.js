@@ -8,9 +8,15 @@
  * can each be switched off (e.g. the "Meet James" portrait shows only the
  * label).
  *
+ * The Post Featured Image block has the same panel (e.g. the Our Team
+ * headshot cards in a Query Loop). It can also label the image with the
+ * post's title ("[HEADSHOT: JAMES T. LAURA, JR.]"), and when the post has no
+ * featured image it shows an empty framed box at the block's height.
+ *
  * Editor: classes and the label are applied to the block wrapper here.
  * Front end: mty_render_image_figure_frame() in inc/extensions.php wraps the
- * image in a .mty-fig-frame element and adds the label as real markup.
+ * image in a .mty-fig-frame element (or frames the featured image figure) and
+ * adds the label as real markup.
  */
 import { __ } from '@wordpress/i18n';
 import { addFilter } from '@wordpress/hooks';
@@ -22,7 +28,8 @@ import { NativeToggleControl, NativeTextControl } from '../../components';
 
 import './style.scss';
 
-const BLOCK_NAME = 'core/image';
+const BLOCKS = ['core/image', 'core/post-featured-image'];
+const FEATURED_IMAGE = 'core/post-featured-image';
 
 /**
  * Builds the modifier classes shared by the editor preview and the front end.
@@ -48,7 +55,7 @@ const getFrameClasses = attributes => {
  * Add the figure frame attributes to core/image.
  */
 addFilter('blocks.registerBlockType', 'mty/image-figure-frame-add-attributes', (settings, name) => {
-    if (name !== BLOCK_NAME) {
+    if (!BLOCKS.includes(name)) {
         return settings;
     }
 
@@ -75,7 +82,17 @@ addFilter('blocks.registerBlockType', 'mty/image-figure-frame-add-attributes', (
             figFrameOverlay: {
                 type: 'boolean',
                 default: true
-            }
+            },
+            ...(name === FEATURED_IMAGE && {
+                figTitleLabel: {
+                    type: 'boolean',
+                    default: false
+                },
+                figTitlePrefix: {
+                    type: 'string',
+                    default: 'Headshot'
+                }
+            })
         }
     };
 });
@@ -90,11 +107,12 @@ addFilter(
         return props => {
             const { name, attributes, setAttributes } = props;
 
-            if (name !== BLOCK_NAME) {
+            if (!BLOCKS.includes(name)) {
                 return <BlockEdit {...props} />;
             }
 
-            const { figFrame, figLabel, figFrameBorder, figFrameTicks, figFrameOverlay } = attributes;
+            const { figFrame, figLabel, figFrameBorder, figFrameTicks, figFrameOverlay, figTitleLabel, figTitlePrefix } = attributes;
+            const isFeaturedImage = name === FEATURED_IMAGE;
 
             return (
                 <>
@@ -108,17 +126,37 @@ addFilter(
                             />
                             {figFrame && (
                                 <>
-                                    <NativeTextControl
-                                        label={__('FIG value', 'mty')}
-                                        value={figLabel}
-                                        placeholder="02"
-                                        help={
-                                            figLabel
-                                                ? `${__('Shown as', 'mty')} “FIG. ${figLabel.toUpperCase()}”`
-                                                : __('Leave empty to hide the FIG label.', 'mty')
-                                        }
-                                        onChange={value => setAttributes({ figLabel: value })}
-                                    />
+                                    {isFeaturedImage && (
+                                        <>
+                                            <NativeToggleControl
+                                                label={__('Post title as label', 'mty')}
+                                                help={__('e.g. “[HEADSHOT: JAMES T. LAURA, JR.]”. Replaces the FIG label.', 'mty')}
+                                                checked={!!figTitleLabel}
+                                                onChange={value => setAttributes({ figTitleLabel: value })}
+                                            />
+                                            {figTitleLabel && (
+                                                <NativeTextControl
+                                                    label={__('Label prefix', 'mty')}
+                                                    value={figTitlePrefix}
+                                                    placeholder="Headshot"
+                                                    onChange={value => setAttributes({ figTitlePrefix: value })}
+                                                />
+                                            )}
+                                        </>
+                                    )}
+                                    {!(isFeaturedImage && figTitleLabel) && (
+                                        <NativeTextControl
+                                            label={__('FIG value', 'mty')}
+                                            value={figLabel}
+                                            placeholder="02"
+                                            help={
+                                                figLabel
+                                                    ? `${__('Shown as', 'mty')} “FIG. ${figLabel.toUpperCase()}”`
+                                                    : __('Leave empty to hide the FIG label.', 'mty')
+                                            }
+                                            onChange={value => setAttributes({ figLabel: value })}
+                                        />
+                                    )}
                                     <NativeToggleControl
                                         label={__('Border', 'mty')}
                                         checked={figFrameBorder !== false}
@@ -154,13 +192,18 @@ addFilter(
         return props => {
             const { name, attributes } = props;
 
-            if (name !== BLOCK_NAME || !attributes.figFrame) {
+            if (!BLOCKS.includes(name) || !attributes.figFrame) {
                 return <BlockListBlock {...props} />;
             }
 
             const classes = [props.className, 'mty-fig-frame-editor', ...getFrameClasses(attributes)].filter(Boolean).join(' ');
             const wrapperProps = { ...props.wrapperProps };
-            if (attributes.figLabel) {
+            if (name === FEATURED_IMAGE && attributes.figTitleLabel) {
+                // The post title isn't known here; the front end shows the real name.
+                const prefix = (attributes.figTitlePrefix || '').trim();
+                const title = __('Post title', 'mty');
+                wrapperProps['data-fig-label'] = `[${prefix ? `${prefix}: ` : ''}${title}]`;
+            } else if (attributes.figLabel) {
                 wrapperProps['data-fig-label'] = `FIG. ${attributes.figLabel}`;
             }
 

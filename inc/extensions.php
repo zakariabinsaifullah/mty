@@ -1555,12 +1555,19 @@ if ( ! function_exists( 'mty_render_image_figure_frame' ) ) :
 	 * element and adds the "FIG. xx" label when the figFrame attribute is on.
 	 * The caption stays outside the frame.
 	 *
-	 * @param string $block_content The rendered block HTML.
-	 * @param array  $block         The block data including name and attributes.
+	 * On core/post-featured-image the frame classes and label go on the block's
+	 * own figure, the label can be the post title ("[Headshot: Name]"), and a
+	 * post without a featured image gets an empty framed figure at the block's
+	 * height instead of nothing.
+	 *
+	 * @param string   $block_content The rendered block HTML.
+	 * @param array    $block         The block data including name and attributes.
+	 * @param WP_Block $instance      The block instance (for the post context).
 	 * @return string Modified block HTML.
 	 */
-	function mty_render_image_figure_frame( $block_content, $block ) {
-		if ( 'core/image' !== ( $block['blockName'] ?? '' ) || empty( $block['attrs']['figFrame'] ) || empty( $block_content ) ) {
+	function mty_render_image_figure_frame( $block_content, $block, $instance = null ) {
+		$name = $block['blockName'] ?? '';
+		if ( ! in_array( $name, array( 'core/image', 'core/post-featured-image' ), true ) || empty( $block['attrs']['figFrame'] ) ) {
 			return $block_content;
 		}
 
@@ -1578,8 +1585,63 @@ if ( ! function_exists( 'mty_render_image_figure_frame' ) ) :
 		}
 
 		$label = isset( $attrs['figLabel'] ) ? trim( (string) $attrs['figLabel'] ) : '';
+		$label = '' !== $label ? 'FIG. ' . $label : '';
+
+		if ( 'core/post-featured-image' === $name ) {
+			$post_id = $instance instanceof WP_Block ? ( $instance->context['postId'] ?? 0 ) : get_the_ID();
+			if ( ! $post_id ) {
+				return $block_content;
+			}
+
+			if ( ! empty( $attrs['figTitleLabel'] ) ) {
+				$prefix = trim( (string) ( $attrs['figTitlePrefix'] ?? 'Headshot' ) );
+				$title  = wp_strip_all_tags( get_the_title( $post_id ) );
+				$label  = '[' . ( '' !== $prefix ? $prefix . ': ' : '' ) . $title . ']';
+			}
+
+			$label_html = '' !== $label
+				? '<span class="mty-fig-frame__label" aria-hidden="true">' . esc_html( $label ) . '</span>'
+				: '';
+
+			// No featured image: an empty framed box at the block's height.
+			if ( '' === trim( $block_content ) ) {
+				$classes[] = 'mty-fig-frame--empty';
+				$styles    = array();
+				if ( ! empty( $attrs['height'] ) ) {
+					$styles[] = 'height:' . $attrs['height'];
+				}
+				if ( ! empty( $attrs['aspectRatio'] ) && 'auto' !== $attrs['aspectRatio'] ) {
+					$styles[] = 'aspect-ratio:' . $attrs['aspectRatio'];
+				}
+				if ( ! empty( $attrs['width'] ) ) {
+					$styles[] = 'width:' . $attrs['width'];
+				}
+				array_unshift( $classes, 'wp-block-post-featured-image' );
+				if ( ! empty( $attrs['className'] ) ) {
+					$classes[] = $attrs['className'];
+				}
+				return '<figure class="' . esc_attr( implode( ' ', $classes ) ) . '"' . ( $styles ? ' style="' . esc_attr( implode( ';', $styles ) ) . '"' : '' ) . '>' . $label_html . '</figure>';
+			}
+
+			$processor = new WP_HTML_Tag_Processor( $block_content );
+			if ( ! $processor->next_tag( 'figure' ) ) {
+				return $block_content;
+			}
+			foreach ( $classes as $class ) {
+				$processor->add_class( $class );
+			}
+			$updated = $processor->get_updated_html();
+			$close   = strrpos( $updated, '</figure>' );
+
+			return false === $close ? $updated : substr_replace( $updated, $label_html . '</figure>', $close, strlen( '</figure>' ) );
+		}
+
+		if ( empty( $block_content ) ) {
+			return $block_content;
+		}
+
 		$label_html = '' !== $label
-			? '<span class="mty-fig-frame__label" aria-hidden="true">' . esc_html( 'FIG. ' . $label ) . '</span>'
+			? '<span class="mty-fig-frame__label" aria-hidden="true">' . esc_html( $label ) . '</span>'
 			: '';
 
 		$open = '<span class="' . esc_attr( implode( ' ', $classes ) ) . '">';
@@ -1598,7 +1660,7 @@ if ( ! function_exists( 'mty_render_image_figure_frame' ) ) :
 		return null === $updated ? $block_content : $updated;
 	}
 endif;
-add_filter( 'render_block', 'mty_render_image_figure_frame', 10, 2 );
+add_filter( 'render_block', 'mty_render_image_figure_frame', 10, 3 );
 
 
 // =============================================================================

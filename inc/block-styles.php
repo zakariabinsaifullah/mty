@@ -46,6 +46,14 @@ if ( ! function_exists( 'mty_block_styles' ) ) :
 		);
 
 		register_block_style(
+			'core/post-template',
+			array(
+				'name'  => 'card-grid',
+				'label' => __( 'Card Grid', 'mty' ),
+			)
+		);
+
+		register_block_style(
 			'core/button',
 			array(
 				'name'  => 'alternative',
