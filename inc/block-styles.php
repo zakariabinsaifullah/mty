@@ -44,6 +44,14 @@ if ( ! function_exists( 'mty_block_styles' ) ) :
 				'label' => __( 'Link', 'mty' ),
 			)
 		);
+
+		register_block_style(
+			'core/accordion',
+			array(
+				'name'  => 'numbered',
+				'label' => __( 'Numbered', 'mty' ),
+			)
+		);
 	}
 endif;
 add_action( 'init', 'mty_block_styles' );

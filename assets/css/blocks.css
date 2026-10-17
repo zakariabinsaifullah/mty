@@ -291,6 +291,104 @@ th.kb-table-data p {
     margin-bottom: 0;
 }
 
+/*
+ * Accordion — Numbered (Figma "FAQ"): a green "Q.01, Q.02…" label before each
+ * question (numbered automatically), a green plus that turns into a minus when
+ * the item is open, and the answer indented under the question text. Item
+ * spacing, borders, colours and heading type come from the blocks' own
+ * settings (Accordion, Item, Heading).
+ */
+.wp-block-accordion.is-style-numbered {
+    counter-reset: mty-faq;
+}
+
+.wp-block-accordion.is-style-numbered > .wp-block-accordion-item {
+    counter-increment: mty-faq;
+}
+
+.wp-block-accordion.is-style-numbered .wp-block-accordion-heading__toggle {
+    align-items: flex-start;
+    gap: 24px;
+    padding: 0;
+}
+
+.wp-block-accordion.is-style-numbered .wp-block-accordion-heading__toggle::before {
+    content: "Q." counter(mty-faq, decimal-leading-zero);
+    flex: 0 0 52px;
+    align-self: baseline;
+    color: var(--wp--preset--color--mty-goblin);
+    font-family: var(--wp--preset--font-family--open-sans, inherit);
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.wp-block-accordion.is-style-numbered .wp-block-accordion-heading__toggle-title {
+    align-self: baseline;
+}
+
+.wp-block-accordion.is-style-numbered .wp-block-accordion-heading__toggle:hover .wp-block-accordion-heading__toggle-title {
+    text-decoration: none;
+}
+
+/* The core "+" glyph is hidden; the plus/minus is drawn with two 2px bars
+   centred on the question's first line. */
+.wp-block-accordion.is-style-numbered .wp-block-accordion-heading__toggle-icon {
+    position: relative;
+    flex: 0 0 14px;
+    width: 14px;
+    height: 1.2em;
+    color: transparent;
+}
+
+.wp-block-accordion.is-style-numbered .wp-block-accordion-heading__toggle-icon::before,
+.wp-block-accordion.is-style-numbered .wp-block-accordion-heading__toggle-icon::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 14px;
+    height: 2px;
+    margin-top: -1px;
+    background: var(--wp--preset--color--mty-goblin);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.wp-block-accordion.is-style-numbered .wp-block-accordion-heading__toggle-icon::after {
+    transform: rotate(90deg);
+}
+
+.wp-block-accordion.is-style-numbered .wp-block-accordion-item.is-open > .wp-block-accordion-heading .wp-block-accordion-heading__toggle-icon {
+    transform: none;
+}
+
+.wp-block-accordion.is-style-numbered .wp-block-accordion-item.is-open > .wp-block-accordion-heading .wp-block-accordion-heading__toggle-icon::after {
+    transform: rotate(90deg) scaleX(0);
+}
+
+/* Answer lines up with the question text: 52px label + 24px gap. */
+.wp-block-accordion.is-style-numbered .wp-block-accordion-panel {
+    padding-left: 76px;
+}
+
+.wp-block-accordion.is-style-numbered .wp-block-accordion-panel > :last-child {
+    margin-bottom: 0;
+}
+
+@media (max-width: 767px) {
+    .wp-block-accordion.is-style-numbered .wp-block-accordion-heading__toggle {
+        gap: 14px;
+    }
+
+    .wp-block-accordion.is-style-numbered .wp-block-accordion-heading__toggle::before {
+        flex-basis: 44px;
+    }
+
+    .wp-block-accordion.is-style-numbered .wp-block-accordion-panel {
+        padding-left: 58px;
+    }
+}
+
 /* Tablet/mobile menu (bars) button in orange, as in the Figma blog post; the
    bars are drawn with currentColor, which Kadence sets to white for hero pages. */
 body.single-post .wp-block-kadence-off-canvas-trigger,
