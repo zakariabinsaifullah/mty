@@ -2,6 +2,12 @@
     margin: 0 !important;
 }
 
+/* Images fill their column. A width picked in the Image block's settings is
+   written inline on the <img>, so it still wins (e.g. the footer badges). */
+.wp-block-image img {
+    width: 100%;
+}
+
 .wp-block-buttons.is-style-full-width {
     width: 100% !important;
 }
