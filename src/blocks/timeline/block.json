@@ -2,7 +2,7 @@
     "$schema": "https://schemas.wp.org/trunk/block.json",
     "apiVersion": 3,
     "name": "mty/timeline",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "title": "Timeline",
     "category": "mty",
     "description": "A row of steps joined by one line, each marked by a square dot, with your own blocks below. The highlighted step can colour its dot only, or its dot and line.",
@@ -52,6 +52,10 @@
         "contentGap": {
             "type": "number",
             "default": 40
+        },
+        "highlightOnHover": {
+            "type": "boolean",
+            "default": false
         }
     },
     "example": {},

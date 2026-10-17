@@ -12,7 +12,7 @@ import { PanelBody, RangeControl, ToggleControl } from '@wordpress/components';
  * Internal dependencies
  */
 import { PanelColorControl } from '../../components';
-import { getTimelineStyle } from './save';
+import { getTimelineStyle, getTimelineClass } from './save';
 
 import './editor.scss';
 
@@ -42,7 +42,7 @@ const colorHelpers = palette => ({
 });
 
 export default function Edit({ attributes, setAttributes, clientId }) {
-    const { steps, columns, color, activeColor, highlightLine, activeLineColor, gap, contentGap } = attributes;
+    const { steps, columns, color, activeColor, highlightLine, highlightOnHover, activeLineColor, gap, contentGap } = attributes;
     const [themePalette] = useSettings('color.palette.theme');
     const { toStored, toPicker } = colorHelpers(themePalette || []);
 
@@ -66,7 +66,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
         setAttributes({ steps: count });
     };
 
-    const blockProps = useBlockProps({ style: getTimelineStyle(attributes) });
+    const blockProps = useBlockProps({ className: getTimelineClass(attributes), style: getTimelineStyle(attributes) });
     const innerBlocksProps = useInnerBlocksProps(blockProps, {
         allowedBlocks: ['mty/timeline-step'],
         // The first step starts highlighted, as in the design.
@@ -124,6 +124,13 @@ export default function Edit({ attributes, setAttributes, clientId }) {
                         help={__('Also draw the highlighted step’s line, as a 3px progress bar. Off: only its dot is coloured.', 'mty')}
                         checked={!!highlightLine}
                         onChange={value => setAttributes({ highlightLine: value })}
+                    />
+                    <ToggleControl
+                        __nextHasNoMarginBottom
+                        label={__('Highlight on hover', 'mty')}
+                        help={__('Desktop: hovering a step highlights it (dot, and line if Highlight line is on) instead of the highlighted step.', 'mty')}
+                        checked={!!highlightOnHover}
+                        onChange={value => setAttributes({ highlightOnHover: value })}
                     />
                 </PanelBody>
                 <PanelColorControl

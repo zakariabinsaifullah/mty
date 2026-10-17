@@ -40,8 +40,16 @@ export const getTimelineStyle = ({ columns, color, activeColor, highlightLine, a
     return style;
 };
 
+/**
+ * Wrapper class for the "Highlight on hover" option.
+ *
+ * @param {Object} attributes Block attributes.
+ * @return {string|undefined} Class name.
+ */
+export const getTimelineClass = ({ highlightOnHover }) => (highlightOnHover ? 'has-hover-highlight' : undefined);
+
 export default function save({ attributes }) {
-    const blockProps = useBlockProps.save({ style: getTimelineStyle(attributes) });
+    const blockProps = useBlockProps.save({ className: getTimelineClass(attributes), style: getTimelineStyle(attributes) });
     const innerBlocksProps = useInnerBlocksProps.save(blockProps);
 
     return <div {...innerBlocksProps} />;
