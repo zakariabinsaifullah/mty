@@ -29,6 +29,7 @@ Follow these rules whenever you design or build a section, pattern, template or 
     -   `upload_media_from_url` / `upload_media_base64`: they skip BinsOptimizer. Upload images through the block editor instead (section 6).
     -   `write_extension_file` / `delete_extension_file` on the MTY theme: theme code is changed locally and reaches the live site by deploy (section 0). Editing it live makes local and live drift apart.
     -   `update_global_styles`: user global styles override `theme.json`. Change colours, typography and buttons in `theme.json` instead.
+-   **Never save page content containing SVGs or Icon blocks through the server** (`update_post`, `replace_in_post`, `edit_post_blocks` on such pages): its API user has no `unfiltered_html`, so WordPress strips `<svg>` from the markup and from block attributes (the Icon block markers come back empty and invalid). Edit those pages in the block editor (Claude in Chrome), which saves as the logged-in admin. Small text-only edits on pages without SVGs are fine.
 -   **Ask first:** anything destructive or site-wide (`delete_*`, plugin/theme install, activate, update or delete, users, `update_settings`, SEO settings, `robots.txt`, redirects, comments) needs the user's clear yes for that action.
 -   **Always verify** a server write on the live front end with Claude in Chrome. A successful tool response only means the data was saved, not that the section looks right.
 
@@ -37,6 +38,8 @@ Follow these rules whenever you design or build a section, pattern, template or 
 -   Wrap every section in a **Kadence Row Layout** block (`kadence/rowlayout`).
 -   Don't use `core/group`, `core/cover` or `core/columns` as the outer container of a section.
 -   **Top-level width (global rule):** every top-level Row Layout (the section wrapper) is set to **Full Width** alignment (`"align":"full"`) with **Inherit Max Width from Theme?** turned on (`"inheritMaxWidth":true`), so its background spans the screen and its content follows the theme's 1310px content width. Never type a custom Max Width on it. Nested Row Layouts don't get this.
+-   **Creating Kadence blocks by script (global rule):** when blocks are built with `wp.blocks.createBlock` in the editor, give every `kadence/rowlayout` and `kadence/column` **`"kbVersion":2`**, or Kadence renders a row without its wrapper (no padding, background or anchor). Kadence adds it in the editor without marking the post dirty, so it is never saved on its own. After inserting, save with `editPost({ content: wp.blocks.serialize( getBlocks() ) })` + `savePost()` and check the front end.
+-   **Kadence Section borders:** set `borderStyle` (`[{"top":[color,"solid",1],…,"unit":"px"}]`, colour as a `var(--wp--preset--color--mty-…)`) **and** clear the legacy widths (`"borderWidth":["","","",""]`, plus `tabletBorderWidth`/`mobileBorderWidth`); while `borderWidth` holds numbers (its default is `[0,0,0,0]`) Kadence ignores `borderStyle`. Turn on the row's **Inner Column Height 100%** (`"columnsInnerHeight":true`) so the bordered inner column fills equal-height cards.
 -   **Global rule:** don't give blocks custom names (no `"metadata":{"name":...}`). Leave every block with its default name in the List View; the user renames blocks themselves if needed.
 
 ## 2. Block priority
@@ -47,6 +50,10 @@ Pick blocks in this order, and move down a level only when the level above can't
 2. **Custom blocks in the MTY inserter category** (`mty/*`):
     - Icon (`mty/icon`)
     - Social Share (`mty/social-share`)
+    - Timeline (`mty/timeline`, with `mty/timeline-step` children): a row of steps joined by one line, each marked by a 12px square dot, with any blocks below (number, heading, text). Use it for every numbered process/steps section. Settings: Steps, Columns (desktop; tablet/mobile always stack, mobile drops the dots), Step gap and Content gap (both default 40px, as in Figma), colours (Dot & Line default `mty-white`, Highlighted Dot default `mty-goblin`) and **Highlight line**. Turn on **Highlight step** on the step that is highlighted (the first, by default).
+        - Practice-page style ("How the process works."): Highlight line **off**, so only the dot is coloured.
+        - Homepage style ("How we move your case."): Highlight line **on** (the highlighted step's line becomes a 3px progress bar), Highlighted Dot `mty-green-pea`, Highlighted Line `mty-goblin`.
+    - Rating (`mty/rating`): SVG star rating with optional rating number.
 3. Always use the MTY **Icon** block where an icon is used. Always use SVG code, and save the SVGs under **My Icons** for future use.
 4. **Other Kadence blocks.** Use these only when neither core blocks nor the theme's custom blocks can do the job.
 

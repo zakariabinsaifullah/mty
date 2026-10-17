@@ -2,14 +2,19 @@
     "$schema": "https://schemas.wp.org/trunk/block.json",
     "apiVersion": 3,
     "name": "mty/timeline",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "title": "Timeline",
     "category": "mty",
-    "description": "A row of steps joined by one line, each marked by a square dot, with your own blocks below.",
-    "allowedBlocks": ["mty/timeline-step"],
+    "description": "A row of steps joined by one line, each marked by a square dot, with your own blocks below. The highlighted step can colour its dot only, or its dot and line.",
+    "allowedBlocks": [
+        "mty/timeline-step"
+    ],
     "supports": {
         "html": false,
-        "align": ["wide", "full"],
+        "align": [
+            "wide",
+            "full"
+        ],
         "spacing": {
             "margin": true,
             "padding": true
@@ -26,11 +31,27 @@
         },
         "color": {
             "type": "string",
-            "default": "#FFFFFF"
+            "default": ""
         },
         "activeColor": {
             "type": "string",
-            "default": "#29A852"
+            "default": ""
+        },
+        "highlightLine": {
+            "type": "boolean",
+            "default": false
+        },
+        "activeLineColor": {
+            "type": "string",
+            "default": ""
+        },
+        "gap": {
+            "type": "number",
+            "default": 40
+        },
+        "contentGap": {
+            "type": "number",
+            "default": 40
         }
     },
     "example": {},

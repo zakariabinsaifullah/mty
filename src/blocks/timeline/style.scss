@@ -2,19 +2,29 @@
  * Timeline
  *
  * A grid of steps joined by one 1px line. Each step starts with a 12px square
- * dot; its line runs across the step and the column gap to the next step's
- * dot, and the last step's line runs to the end of its column. A highlighted
- * step (`is-active`) draws its dot and line in the active colour.
+ * dot; its line runs across the step and the step gap to the next step's dot.
+ * The wrapper clips horizontal overflow, so the line of the last step in each
+ * row (and of the last step) ends exactly at the row's edge, whatever the
+ * number of columns.
+ *
+ * The highlighted step (`is-active`) colours its dot (Goblin by default). With
+ * "Highlight line" on, the block sets --mty-timeline-active-line(-height) and
+ * that step's line becomes a 3px progress bar too (homepage "How we move your
+ * case."); otherwise the line stays the normal colour (practice page "How the
+ * process works.").
+ *
  * Columns come from the block (--mty-timeline-columns); tablet and mobile
- * always stack the steps in one column.
+ * always stack the steps in one column, and mobile drops the dots.
  */
 .wp-block-mty-timeline {
-    --mty-timeline-color: #ffffff;
-    --mty-timeline-active: #29a852;
-    --mty-timeline-gap: 24px;
+    --mty-timeline-color: var(--wp--preset--color--mty-white);
+    --mty-timeline-active: var(--wp--preset--color--mty-goblin);
+    --mty-timeline-gap: 40px;
+    --mty-timeline-content-gap: 40px;
     display: grid;
     grid-template-columns: repeat(var(--mty-timeline-columns, 4), minmax(0, 1fr));
     gap: var(--mty-timeline-gap);
+    overflow-x: clip;
 
     @media (max-width: 1024px) {
         grid-template-columns: minmax(0, 1fr);
@@ -22,15 +32,19 @@
 }
 
 .wp-block-mty-timeline-step {
-    --mty-timeline-step-color: var(--mty-timeline-color);
+    --mty-timeline-dot-color: var(--mty-timeline-color);
+    --mty-timeline-line-color: var(--mty-timeline-color);
+    --mty-timeline-line-height: 1px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: var(--mty-timeline-content-gap);
     min-width: 0;
     margin: 0;
 
     &.is-active {
-        --mty-timeline-step-color: var(--mty-timeline-active);
+        --mty-timeline-dot-color: var(--mty-timeline-active);
+        --mty-timeline-line-color: var(--mty-timeline-active-line, var(--mty-timeline-color));
+        --mty-timeline-line-height: var(--mty-timeline-active-line-height, 1px);
     }
 
     .mty-timeline-step__marker {
@@ -46,7 +60,7 @@
             z-index: 1;
             width: 12px;
             height: 12px;
-            background-color: var(--mty-timeline-step-color);
+            background-color: var(--mty-timeline-dot-color);
         }
 
         // The line, reaching across the gap to the next step's dot.
@@ -56,12 +70,14 @@
             top: 50%;
             left: 0;
             width: calc(100% + var(--mty-timeline-gap));
-            height: 1px;
+            height: var(--mty-timeline-line-height);
             transform: translateY(-50%);
-            background-color: var(--mty-timeline-step-color);
+            background-color: var(--mty-timeline-line-color);
         }
     }
 
+    // The very last step's line ends at its own column (it matters when there
+    // are fewer steps than columns; otherwise the wrapper's clip handles it).
     &:last-child .mty-timeline-step__marker::after {
         width: 100%;
     }
