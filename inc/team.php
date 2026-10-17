@@ -382,7 +382,8 @@ add_action( 'enqueue_block_editor_assets', 'mty_enqueue_team_editor_assets' );
 
 if ( ! function_exists( 'mty_team_columns' ) ) :
 	/**
-	 * Adds Headshot, Position/Office and Order columns to the Team list.
+	 * Adds Headshot, Position/Office and Order columns to the Team list, after
+	 * the title so the checkbox and title keep their default first places.
 	 *
 	 * @param array $columns Existing columns.
 	 * @return array
@@ -390,12 +391,10 @@ if ( ! function_exists( 'mty_team_columns' ) ) :
 	function mty_team_columns( $columns ) {
 		$new = array();
 		foreach ( $columns as $key => $label ) {
-			if ( 'title' === $key ) {
-				$new['mty_headshot'] = __( 'Headshot', 'mty' );
-			}
 			$new[ $key ] = $label;
 			if ( 'title' === $key ) {
-				$new['mty_eyebrow'] = __( 'Position, Office', 'mty' );
+				$new['mty_headshot'] = __( 'Headshot', 'mty' );
+				$new['mty_eyebrow']  = __( 'Position, Office', 'mty' );
 				$new['mty_order']   = __( 'Order', 'mty' );
 			}
 		}
