@@ -1,0 +1,374 @@
+/* ── Slide-in Form Panel ───────────────────────────────────────────────────── */
+
+.mty-form-panel__body .gform-theme--foundation .gform_fields {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.mty-form-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 9998;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+        opacity 0.35s ease,
+        visibility 0.35s ease;
+}
+
+.mty-form-overlay.is-open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mty-form-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 720px;
+    background: #ffffff;
+    z-index: 99999;
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+}
+
+.mty-form-panel.is-open {
+    transform: translateX(0);
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────────── */
+
+.mty-form-panel__header {
+    background: var(--wp--preset--color--mty-green-pea, #1E7444);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    flex-shrink: 0;
+}
+
+.mty-form-panel__phone {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--wp--preset--font-size--mty-regular, 16px);
+    font-weight: 700;
+    line-height: 1.5;
+    color: #ffffff;
+    text-decoration: none;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mty-form-panel__phone svg {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+}
+
+.mty-form-panel__phone:hover {
+    color: #ffffff;
+    opacity: 0.85;
+    text-decoration: none;
+}
+
+.mty-form-panel__close {
+    background: none;
+    border: none;
+    color: var(--wp--preset--color--mty-neutral-lightest, #f2f2f2);
+    cursor: pointer;
+    padding: 4px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 0;
+}
+
+.mty-form-panel__close:hover {
+    background: none;
+    color: var(--wp--preset--color--mty-neutral-lightest, #f2f2f2);
+    opacity: 0.7;
+}
+
+/* ── Body ────────────────────────────────────────────────────────────────────── */
+
+.mty-form-panel__body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 32px 80px 80px;
+    -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 767px) {
+    .mty-form-panel__body {
+        padding: 32px 24px 48px;
+    }
+}
+
+/* ── Tab nav ────────────────────────────────────────────────────────────────── */
+
+.mty-form-panel__tabs {
+    display: flex;
+    justify-content: center;
+    background: #F2F2F2;
+    border-radius: 50px;
+    padding: 8px;
+    margin: 0 auto 30px;
+    max-width: 360px;
+    gap: 4px;
+}
+
+.mty-form-panel__tab {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #2A3136;
+    min-height: 42px;
+    cursor: pointer;
+    transition:
+        background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: inherit;
+}
+
+.mty-form-panel__tab:hover {
+    color: #2A3136;
+}
+
+.mty-form-panel__tab:focus-visible {
+    outline: 2px solid #1E7444;
+    outline-offset: 2px;
+}
+
+.mty-form-panel__tab.is-active {
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    color: #2A3136;
+}
+
+/* ── Tab panels ─────────────────────────────────────────────────────────────── */
+
+.mty-form-panel__panel[hidden] {
+    display: none;
+}
+
+.mty-form-panel__calendly {
+    margin-top: 8px;
+}
+
+.mty-form-panel__calendly iframe {
+    display: block;
+    width: 100%;
+}
+
+.mty-form-panel__title {
+    font-family: var(--wp--preset--font-family--alexandria, "Alexandria", sans-serif);
+    font-size: var(--wp--preset--font-size--mty-heading-four, 36px);
+    font-weight: 300;
+    line-height: 1.2;
+    color: var(--wp--preset--color--mty-thunder, #231F20);
+    margin: 0 0 16px;
+}
+
+.mty-form-panel__desc {
+    font-size: var(--wp--preset--font-size--mty-regular, 16px);
+    color: var(--wp--preset--color--mty-neutral-dark, #555555);
+    line-height: 1.5;
+    margin: 0 0 20px;
+}
+
+/* ── Body scroll lock ────────────────────────────────────────────────────────── */
+
+body.mty-panel-open {
+    overflow: hidden;
+}
+
+/* ── Gravity Forms fields ───────────────────────────────────────────────────── */
+
+/* Open Sans across every Gravity Form. GF's font variables all resolve back to
+   --gf-font-family-base: controls and placeholders through -primary, labels
+   through -secondary, descriptions through -tertiary, buttons and validation
+   direct. Setting that one variable therefore covers the lot.
+
+   The element rule after it is for the no-framework theme, which predates the
+   CSS API and does not read those variables. */
+.gform_wrapper {
+    --gf-font-family-base: var(--wp--preset--font-family--open-sans, "Open Sans", sans-serif);
+}
+
+.gform_wrapper input,
+.gform_wrapper select,
+.gform_wrapper textarea,
+.gform_wrapper button,
+.gform_wrapper label,
+.gform_wrapper legend,
+.gform_wrapper .gfield_description,
+.gform_wrapper .gform_button {
+    font-family: var(--wp--preset--font-family--open-sans, "Open Sans", sans-serif) !important;
+}
+
+/* Field metrics come from Gravity Forms' own CSS API custom properties rather
+   than from per-element overrides. GF derives the height, radius, font size and
+   padding of every control from these, so input, select and textarea stay in
+   step — and the select keeps its native chevron, which GF sizes and positions
+   from these same variables. Scoped to --framework so the no-framework
+   subscription form in style.css is left alone; the doubled class is needed to
+   out-specify GF's own defaults, which are declared on `.gform-theme--framework`
+   in a stylesheet that loads after this one. */
+.gform_wrapper.gform-theme--framework {
+    --gf-ctrl-size: 56px;
+    --gf-ctrl-size-md: 56px;
+    --gf-ctrl-line-height: 56px;
+    --gf-ctrl-font-size: 16px;
+    --gf-ctrl-padding-x: 16px;
+    --gf-ctrl-radius: 4px;
+    --gf-ctrl-select-icon-size: 12px;
+
+    /* GF caps the radius on larger controls via `min()`, so the textarea would
+       otherwise disagree with every other field. */
+    --gf-ctrl-radius-max-lg: 4px;
+
+    /* 8px between a label and its field. */
+    --gf-label-space-primary: 8px;
+}
+
+.gform-theme--foundation .gform_fields {
+    row-gap: 20px !important;
+}
+
+.gform-body.gform_body input,
+.gform-body.gform_body textarea,
+.gform-body.gform_body select {
+    width: 100%;
+    border-color: var(--wp--preset--color--mty-neutral-lighter, #d8d8d8) !important;
+    background-color: #ffffff !important;
+    outline: none;
+    box-shadow: none !important;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+    box-sizing: border-box;
+}
+
+/* A select ignores the control line-height GF gives inputs, so its text sits
+   high in the taller box — set it explicitly to centre the value. The chevron is
+   pinned by `right 10px center !important` in style.css; re-align it to the
+   field's own padding. Both need to out-specify that rule. */
+.gform-theme--framework .gform-body.gform_body select {
+    line-height: var(--gf-ctrl-line-height);
+    background-position: right var(--gf-ctrl-padding-x) center !important;
+    padding-right: calc(var(--gf-ctrl-padding-x) * 2 + var(--gf-ctrl-select-icon-size)) !important;
+}
+
+/* "What's on your mind?" box: 160px tall with the same 16px padding. */
+.gform-theme--framework .gform-body.gform_body textarea {
+    min-height: 160px !important;
+    height: 160px;
+    padding: 16px !important;
+    line-height: 1.5 !important;
+}
+
+.gfield_label {
+    color: var(--wp--preset--color--mty-neutral-darker, #191919) !important;
+    font-size: var(--wp--preset--font-size--mty-medium, 18px) !important;
+    font-weight: 600 !important;
+    line-height: 1.5 !important;
+}
+
+.gform_body input::placeholder,
+.gform_body textarea::placeholder {
+    color: var(--wp--preset--color--mty-neutral, #7f7f7f) !important;
+}
+
+.gform_body input:focus,
+.gform_body textarea:focus,
+.gform_body select:focus {
+    border-color: var(--wp--preset--color--mty-green-pea, #1E7444) !important;
+    outline-color: rgba(41, 51, 92, 0.15) !important;
+}
+
+/*
+ * Submit button — the default block button, exactly.
+ *
+ * mty_gform_submit_button() (inc/form.php) rebuilds Gravity Forms' submit
+ * `<input>` as a `<button>` inside the same `.wp-block-button` wrapper a core
+ * button block renders.
+ *
+ * What is restated below is everything the default button gets from
+ * `styles.elements.button` in theme.json: Gravity Forms declares its own button
+ * colours, metrics and typography at a higher specificity than the
+ * `.wp-element-button` rules global styles emits, so those would otherwise win.
+ * Values are read from the same presets theme.json uses, so palette and font
+ * size changes still flow through — but keep this block in sync if
+ * `styles.elements.button` itself changes.
+ */
+.wp-block-button.mty-gform-button {
+    display: inline-block;
+    max-width: 100%;
+}
+
+/*
+ * Conditional logic on the submit button: Gravity Forms hides it with an inline
+ * `display: none` (its own branch for a literal `input[type="submit"]` doesn't
+ * fire for our `<button>`), so hide the wrapper on GF's flag instead.
+ */
+.wp-block-button.mty-gform-button:has(.gform_button[data-conditional-logic='hidden']) {
+    display: none;
+}
+
+.gform_wrapper .gform_button.button {
+    background: var(--wp--preset--color--mty-goblin, #3a8d3b) !important;
+    color: var(--wp--preset--color--mty-white, #ffffff) !important;
+    border: none !important;
+    border-radius: 100px !important;
+    padding: 16px 32px !important;
+    width: auto !important;
+    box-sizing: border-box !important;
+    font-family: var(--wp--preset--font-family--open-sans, "Open Sans", sans-serif) !important;
+    font-size: var(--wp--preset--font-size--mty-regular, 16px) !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: 1.3 !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+    transition:
+        background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Mirrors `styles.elements.button:hover`. */
+.gform_wrapper .gform_button.button:hover {
+    background: var(--wp--preset--color--mty-goblin-dark, #2E702F) !important;
+    color: var(--wp--preset--color--mty-white, #ffffff) !important;
+}
+
+/* Mirrors `styles.elements.button:focus`. */
+.gform_wrapper .gform_button.button:focus {
+    outline-color: var(--wp--preset--color--mty-thunder-darkest, #0A0909) !important;
+    outline-offset: 2px !important;
+}
+
+label.gfield_label.gform-field-label {
+    flex-wrap: nowrap !important;
+}
+
+p.gform_required_legend {
+    display: none !important;
+}

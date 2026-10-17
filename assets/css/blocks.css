@@ -1,0 +1,676 @@
+:where(figure) {
+    margin: 0 !important;
+}
+
+/* Images fill their column. A width picked in the Image block's settings is
+   written inline on the <img>, so it still wins (e.g. the footer badges). */
+.wp-block-image img {
+    width: 100%;
+}
+
+.wp-block-buttons.is-style-full-width {
+    width: 100% !important;
+}
+
+.is-style-post-typo.wp-block-post-content h2 {
+    font-size: var(--wp--preset--font-size--mty-heading-three);
+}
+
+.wp-block-post-excerpt__more-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    color: #538988;
+    transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Arrow icon matching the theme's arrow SVG (white stroke). */
+.wp-block-post-excerpt__more-link::after {
+    content: '';
+    width: 11px;
+    height: 11px;
+    flex-shrink: 0;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTMiIHZpZXdCb3g9IjAgMCAxNCAxMyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTguMjUgMC4yODEyNUwxMy43NSA1LjUzMTI1QzEzLjkwNjIgNS42ODc1IDE0IDUuODc1IDE0IDYuMDkzNzVDMTQgNi4yODEyNSAxMy45MDYyIDYuNDY4NzUgMTMuNzUgNi42MjVMOC4yNSAxMS44NzVDNy45Njg3NSAxMi4xNTYyIDcuNDY4NzUgMTIuMTU2MiA3LjE4NzUgMTEuODQzOEM2LjkwNjI1IDExLjU2MjUgNi45MDYyNSAxMS4wNjI1IDcuMjE4NzUgMTAuNzgxMkwxMS4zNzUgNi44NDM3NUgwLjc1QzAuMzEyNSA2Ljg0Mzc1IDAgNi41IDAgNi4wOTM3NUMwIDUuNjU2MjUgMC4zMTI1IDUuMzQzNzUgMC43NSA1LjM0Mzc1SDExLjM3NUw3LjIxODc1IDEuMzc1QzYuOTA2MjUgMS4wOTM3NSA2LjkwNjI1IDAuNTkzNzUgNy4xODc1IDAuMzEyNUM3LjQ2ODc1IDAgNy45Mzc1IDAgOC4yNSAwLjI4MTI1WiIgZmlsbD0iIzUzODk4OCIvPgo8L3N2Zz4K');
+    background-repeat: no-repeat;
+    background-size: contain;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.wp-block-post-excerpt__more-link:hover::after {
+    transform: translateX(2px);
+}
+
+header.wp-block-kadence-rowlayout {
+    position: relative;
+}
+
+header.wp-block-kadence-rowlayout::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(180deg, rgba(6, 24, 57, 0.7) 50%, rgba(6, 24, 57, 0) 77.94%);
+    content: '';
+    z-index: -1;
+}
+
+.has-glass-effect {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    /* Frost 100 + Refraction 38 + Dispersion 100 */
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(24px) saturate(1.2);
+    -webkit-backdrop-filter: blur(24px) saturate(1.2);
+}
+
+.has-glass-effect::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    /* Light 79° sheen */
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.175) 0%, rgba(255, 255, 255, 0.04) 35%, rgba(255, 255, 255, 0) 60%);
+}
+
+.mty-icon-pos .kt-svg-icon-link {
+    flex-direction: row-reverse !important;
+    gap: 12px;
+}
+
+.wp-block-button.is-style-link .wp-block-button__link {
+    display: inline-flex !important;
+    align-items: center;
+    text-decoration: none;
+}
+
+.has-featured-image-bg:before {
+    background: linear-gradient(172.74deg, rgba(34, 34, 34, 0) -35.15%, #191919 81.33%);
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+@media screen and (max-width: 767px) {
+    .is-style-wrap-mobile {
+        flex-wrap: wrap !important;
+    }
+}
+
+/*
+ * Group — Plain Links: links inside keep their text's weight and get no
+ * underline (paragraph links are underlined by default in style.css). For
+ * link lists such as "On this page".
+ */
+.wp-block-group.is-style-plain-links a {
+    text-decoration: none;
+}
+
+/*
+ * Post Template — Card Grid: for Query Loop card grids (e.g. the Our Team
+ * attorney cards). Use with the Grid layout set to 3 columns. Each card
+ * stretches to the row's height (a Group inside with Full Height fills it), a
+ * card left alone in the last row spans the full width (Sean's card in
+ * Figma), and at 1024px and below the cards stack in one column.
+ */
+.wp-block-post-template.is-style-card-grid > li {
+    display: flex;
+    flex-direction: column;
+}
+
+.wp-block-post-template.is-style-card-grid > li > * {
+    flex-grow: 1;
+}
+
+@media (min-width: 1025px) {
+    .wp-block-post-template.is-style-card-grid > li:last-child:nth-child(3n + 1) {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 1024px) {
+    .wp-block-post-template.is-style-card-grid.is-layout-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+/*
+ * Mega menu link lists (List block styles).
+ *
+ * Mega Links: a plain list of links (practice areas, cities), 16px Open Sans,
+ * white; on hover a link turns Goblin and an arrow slides in after it.
+ * Mega Links: Large: the big links in the About Us panel (About the Firm, Our
+ * Team, Contact Us), Alexandria semi-bold with the arrow always on the right
+ * and a faint divider between items.
+ */
+ul.is-style-mega-links,
+ul.is-style-mega-links-large {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+ul.is-style-mega-links > li + li {
+    margin-top: 12px;
+}
+
+ul.is-style-mega-links a,
+ul.is-style-mega-links-large a {
+    color: var(--wp--preset--color--mty-white);
+    text-decoration: none;
+    transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+ul.is-style-mega-links a {
+    font-size: var(--wp--preset--font-size--mty-regular);
+}
+
+ul.is-style-mega-links a::after {
+    content: "\2192";
+    display: inline-block;
+    margin-left: 10px;
+    opacity: 0;
+    transform: translateX(-6px);
+    transition:
+        opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+ul.is-style-mega-links a:hover,
+ul.is-style-mega-links a:focus-visible,
+ul.is-style-mega-links-large a:hover,
+ul.is-style-mega-links-large a:focus-visible {
+    color: var(--wp--preset--color--mty-goblin);
+}
+
+ul.is-style-mega-links a:hover::after,
+ul.is-style-mega-links a:focus-visible::after {
+    opacity: 1;
+    transform: none;
+}
+
+ul.is-style-mega-links-large > li + li {
+    border-top: 1px solid var(--wp--preset--color--mty-white-15);
+}
+
+ul.is-style-mega-links-large a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 0;
+    font-family: var(--wp--preset--font-family--alexandria);
+    font-size: var(--wp--preset--font-size--mty-heading-five);
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+ul.is-style-mega-links-large > li:first-child a {
+    padding-top: 0;
+}
+
+ul.is-style-mega-links-large a::after {
+    content: "\2192";
+    font-family: var(--wp--preset--font-family--open-sans);
+    font-size: var(--wp--preset--font-size--mty-regular);
+    font-weight: 400;
+}
+
+/*
+ * Mega menus (Kadence Navigation items with "Mega Menu" on, width
+ * "Container").
+ *
+ * Kadence positions a container-width panel against the nearest positioned
+ * parent, which in this header is the menu's own column. Make the header row
+ * the reference instead, so every panel spans the row (1310px content + the
+ * row's side padding) and starts on the white rule under the nav, as in Figma.
+ */
+.wp-block-kadence-header .kadence-header-row-inner:has(.kadence-menu-mega-enabled) {
+    position: relative;
+}
+
+.wp-block-kadence-header .kadence-header-row-inner:has(.kadence-menu-mega-enabled) .wp-block-kadence-header-section,
+.wp-block-kadence-header .kadence-header-row-inner:has(.kadence-menu-mega-enabled) .wp-block-kadence-header-column,
+.wp-block-kadence-header .kadence-header-row-inner:has(.kadence-menu-mega-enabled) .wp-block-kadence-navigation,
+.wp-block-kadence-header .kadence-header-row-inner:has(.kadence-menu-mega-enabled) .kb-navigation,
+.wp-block-kadence-header .kadence-header-row-inner:has(.kadence-menu-mega-enabled) .kb-navigation > li.kadence-menu-mega-enabled {
+    position: static;
+}
+
+.wp-block-kadence-header .kb-navigation > li.kb-menu-mega-width-container > .sub-menu.mega-menu {
+    top: 100%;
+    right: 0 !important;
+    left: 0 !important;
+    width: auto !important;
+    max-width: none;
+    transform: none !important;
+    margin: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+/* Parent item: "+" instead of Kadence's chevron, "−" while open; text and
+   sign Goblin while open. */
+.wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled > .kb-link-wrap {
+    position: relative;
+}
+
+.wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled .kb-nav-dropdown-toggle-btn svg {
+    display: none;
+}
+
+.wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled .kb-nav-dropdown-toggle-btn {
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    color: inherit;
+    font-family: var(--wp--preset--font-family--open-sans);
+    font-size: var(--wp--preset--font-size--mty-small);
+    font-weight: 400;
+    line-height: 1;
+}
+
+.wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled .kb-nav-dropdown-toggle-btn::before {
+    content: "+";
+}
+
+.wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled:is(:hover, :focus-within, .menu-item--toggled-on) > .kb-link-wrap,
+.wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled:is(:hover, :focus-within, .menu-item--toggled-on) > .kb-link-wrap .kb-nav-link-content {
+    color: var(--wp--preset--color--mty-goblin);
+}
+
+.wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled:is(:hover, :focus-within, .menu-item--toggled-on) .kb-nav-dropdown-toggle-btn::before {
+    content: "\2212";
+}
+
+/* 2px Goblin underline on the white rule (the link area ends 25px above the
+   row's bottom edge: 24px padding + the 1px rule). */
+.wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled > .kb-link-wrap::after {
+    content: "";
+    position: absolute;
+    top: calc(100% + 23px);
+    right: 0;
+    left: 0;
+    height: 2px;
+    background-color: var(--wp--preset--color--mty-goblin);
+    opacity: 0;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+.wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled:is(:hover, :focus-within, .menu-item--toggled-on) > .kb-link-wrap::after {
+    opacity: 1;
+}
+
+/* Invisible bridge over the 25px between the link and the panel, so the
+   panel stays open while the pointer moves down into it. */
+.wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled > .kb-link-wrap::before {
+    content: "";
+    position: absolute;
+    top: 100%;
+    right: -20px;
+    left: -20px;
+    height: 26px;
+}
+
+/* Kadence Codes */
+
+.kb-table p {
+    margin: 0 !important;
+}
+
+/*
+ * Button styles
+ *
+ * Loaded in both the editor and the front end via `enqueue_block_assets`, so
+ * the two stay identical. Block style variation CSS (`is-style-alternative`,
+ * `is-style-link`) is not emitted from theme.json at all, so those variations
+ * are defined here rather than there.
+ *
+ * The default button (`styles.elements.button` in theme.json) has no hover
+ * state, and neither does Link below. Alternative and Outline do have their
+ * own hover colours, mirrored in theme.json under
+ * `styles.blocks.core/button.variations`; keep the two in sync if either
+ * changes.
+ */
+
+/*
+ * Button arrow — the "→" after the label in the Figma "Button / Primary" and
+ * "Button / Outline" (Open Sans Regular 16px, 12px from the label, no letter
+ * spacing or uppercase from the button). On the default (primary) and Outline
+ * styles only; a button that uses Icon Settings (Iconic Button) shows its own
+ * icon instead.
+ */
+.wp-block-button:not([class*="is-style-"]):not(.mty-icon-button) > .wp-block-button__link::after,
+.wp-block-button.is-style-fill:not(.mty-icon-button) > .wp-block-button__link::after,
+.wp-block-button.is-style-outline:not(.mty-icon-button) > .wp-block-button__link::after {
+    content: "\2192";
+    margin-left: 12px;
+    font-size: var(--wp--preset--font-size--mty-regular);
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1;
+    text-transform: none;
+}
+
+/*
+ * Alternative — own fill/text colour and padding; radius and typography are
+ * inherited from `styles.elements.button` in theme.json (square, Open Sans
+ * 14px/600 uppercase), so no need to restate them. Goes full width on tablet/mobile.
+ *
+ * theme.json declares this variation under
+ * `styles.blocks.core/button.variations.alternative`, but block style variation
+ * CSS is not emitted from theme.json (verified against WP 7.0), so it is
+ * restated here. Keep the two in sync.
+ */
+.wp-block-button.is-style-alternative .wp-block-button__link {
+    background-color: var(--wp--preset--color--mty-goblin-lightest);
+    color: var(--wp--preset--color--mty-green-pea);
+    padding: 4px 28px;
+}
+
+/* Transition is inherited from the default button's `css` in theme.json
+   (styles.elements.button) — background-color/color/border-color at 0.3s. */
+.wp-block-button.is-style-alternative .wp-block-button__link:hover {
+    background-color: var(--wp--preset--color--mty-goblin);
+    color: var(--wp--preset--color--mty-white);
+}
+
+@media (max-width: 1024px) {
+    .wp-block-button.is-style-alternative {
+        width: 100%;
+    }
+}
+
+/*
+ * Outline — the default button (`styles.elements.button` in theme.json: square
+ * corners, Open Sans 14px/600 uppercase, arrow) with a transparent fill and a 1px
+ * `currentColor` border, in white. Padding is 1px tighter than the default's
+ * 16px 28px so the border doesn't make it any larger than a default button.
+ *
+ * Registered by core, not by the theme. Core ships its own CSS for this
+ * variation (`border: 2px solid`, `color: currentColor`, and its own padding)
+ * wrapped in `:root :where(...)`, so these plain class selectors outrank it.
+ * Mirrored in theme.json under `styles.blocks.core/button.variations.outline`;
+ * keep the two in sync. Goes full width on tablet/mobile with every other
+ * button (see "Tablet & mobile: full-width buttons" below).
+ */
+.wp-block-button.is-style-outline .wp-block-button__link {
+    background-color: transparent;
+    background-image: none;
+    border: 1px solid currentColor;
+    color: var(--wp--preset--color--mty-white);
+    padding: 15px 27px;
+    text-align: center !important;
+    justify-content: center !important;
+}
+
+/* The border is `currentColor`, so it turns orange along with the text. */
+.wp-block-button.is-style-outline .wp-block-button__link:hover {
+    background-color: transparent;
+    color: var(--wp--preset--color--mty-goblin);
+}
+
+/*
+ * Link — must not pick up the default button's white fill. Same reason as
+ * Alternative above: the variation's `background: transparent` in theme.json
+ * is not emitted, so it is restated here.
+ *
+ * Underlined with a 1px bottom border rather than `text-decoration`, so the
+ * rule sits clear of the descenders. `currentColor` keeps it in step with the
+ * link colour, including the hover swap below.
+ */
+.wp-block-button.is-style-link .wp-block-button__link {
+    background-color: transparent;
+    background-image: none;
+    color: #538988;
+    border-bottom: 1px solid currentColor;
+}
+
+.wp-block-button.is-style-link .wp-block-button__link:hover {
+    color: var(--wp--preset--color--mty-green-pea);
+}
+
+/* Kadence Table */
+
+.kb-table-container {
+    width: 100%;
+}
+
+/* Head row (Figma "Head Row"): 600 uppercase labels in the text colour, with
+   20px top/bottom padding instead of the body cells' padding. Body cells keep
+   their content vertically centred. */
+th.kb-table-data p {
+    text-transform: uppercase;
+    font-weight: 600;
+    color: inherit;
+}
+
+.kb-table th.kb-table-data {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.kb-table td.kb-table-data {
+    vertical-align: middle;
+}
+
+@media (max-width: 600px) {
+    .kb-table {
+        table-layout: auto !important;
+        min-width: 600px !important;
+    }
+}
+
+/* FAQ accordion
+   A Kadence Accordion with the class `mty-faq` (Advanced → Additional CSS
+   class): 720px wide and centred, a thin divider above the first question and
+   below every question/answer, no title background and no answer box. Title
+   type, padding and the orange chevron come from the block's own settings. */
+
+.wp-block-kadence-accordion.mty-faq {
+    max-width: 720px;
+    margin-inline: auto;
+    border-top: 1px solid var(--wp--preset--color--mty-thunder-lightest);
+}
+
+.wp-block-kadence-accordion.mty-faq .kt-accordion-pane {
+    border-bottom: 1px solid var(--wp--preset--color--mty-thunder-lightest);
+}
+
+.wp-block-kadence-accordion.mty-faq .kt-blocks-accordion-header,
+.wp-block-kadence-accordion.mty-faq .kt-blocks-accordion-header:hover,
+.wp-block-kadence-accordion.mty-faq .kt-blocks-accordion-header:focus,
+.wp-block-kadence-accordion.mty-faq .kt-blocks-accordion-header.kt-accordion-panel-active {
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    text-align: left;
+}
+
+.wp-block-kadence-accordion.mty-faq .kt-accordion-panel-inner {
+    border: 0;
+    background: transparent;
+}
+
+.wp-block-kadence-accordion.mty-faq .kt-accordion-panel-inner > :last-child {
+    margin-bottom: 0;
+}
+
+/*
+ * Accordion — Numbered (Figma "FAQ"): a green "Q.01, Q.02…" label before each
+ * question (numbered automatically), a green plus that turns into a minus when
+ * the item is open, and the answer indented under the question text. Item
+ * spacing, borders, colours and heading type come from the blocks' own
+ * settings (Accordion, Item, Heading).
+ */
+.wp-block-accordion.is-style-numbered {
+    counter-reset: mty-faq;
+}
+
+.wp-block-accordion.is-style-numbered > .wp-block-accordion-item {
+    counter-increment: mty-faq;
+}
+
+.wp-block-accordion.is-style-numbered .wp-block-accordion-heading__toggle {
+    align-items: flex-start;
+    gap: 24px;
+    padding: 0;
+}
+
+.wp-block-accordion.is-style-numbered .wp-block-accordion-heading__toggle::before {
+    content: "Q." counter(mty-faq, decimal-leading-zero);
+    flex: 0 0 52px;
+    align-self: baseline;
+    color: var(--wp--preset--color--mty-goblin);
+    font-family: var(--wp--preset--font-family--open-sans, inherit);
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.wp-block-accordion.is-style-numbered .wp-block-accordion-heading__toggle-title {
+    align-self: baseline;
+}
+
+.wp-block-accordion.is-style-numbered .wp-block-accordion-heading__toggle:hover .wp-block-accordion-heading__toggle-title {
+    text-decoration: none;
+}
+
+/* The core "+" glyph is hidden; the plus/minus is drawn with two 2px bars
+   centred on the question's first line. */
+.wp-block-accordion.is-style-numbered .wp-block-accordion-heading__toggle-icon {
+    position: relative;
+    flex: 0 0 14px;
+    width: 14px;
+    height: 1.2em;
+    color: transparent;
+}
+
+.wp-block-accordion.is-style-numbered .wp-block-accordion-heading__toggle-icon::before,
+.wp-block-accordion.is-style-numbered .wp-block-accordion-heading__toggle-icon::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 14px;
+    height: 2px;
+    margin-top: -1px;
+    background: var(--wp--preset--color--mty-goblin);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.wp-block-accordion.is-style-numbered .wp-block-accordion-heading__toggle-icon::after {
+    transform: rotate(90deg);
+}
+
+.wp-block-accordion.is-style-numbered .wp-block-accordion-item.is-open > .wp-block-accordion-heading .wp-block-accordion-heading__toggle-icon {
+    transform: none;
+}
+
+.wp-block-accordion.is-style-numbered .wp-block-accordion-item.is-open > .wp-block-accordion-heading .wp-block-accordion-heading__toggle-icon::after {
+    transform: rotate(90deg) scaleX(0);
+}
+
+/* Answer lines up with the question text: 52px label + 24px gap. */
+.wp-block-accordion.is-style-numbered .wp-block-accordion-panel {
+    padding-left: 76px;
+}
+
+.wp-block-accordion.is-style-numbered .wp-block-accordion-panel > :last-child {
+    margin-bottom: 0;
+}
+
+@media (max-width: 767px) {
+    .wp-block-accordion.is-style-numbered .wp-block-accordion-heading__toggle {
+        gap: 14px;
+    }
+
+    .wp-block-accordion.is-style-numbered .wp-block-accordion-heading__toggle::before {
+        flex-basis: 44px;
+    }
+
+    .wp-block-accordion.is-style-numbered .wp-block-accordion-panel {
+        padding-left: 58px;
+    }
+}
+
+/* Tablet/mobile menu (bars) button in orange, as in the Figma blog post; the
+   bars are drawn with currentColor, which Kadence sets to white for hero pages. */
+body.single-post .wp-block-kadence-off-canvas-trigger,
+body.single-post .wp-block-kadence-off-canvas-trigger:hover,
+body.single-post .wp-block-kadence-off-canvas-trigger:focus,
+.editor-styles-wrapper:has(.wp-block-post-author-name) .wp-block-kadence-off-canvas-trigger {
+    color: var(--wp--preset--color--mty-goblin, #3a8d3b) !important;
+}
+
+/* Tablet/mobile header row: 15px left/right instead of Kadence's 30px. */
+@media (max-width: 1024px) {
+    body.single-post .kadence-header-row-inner,
+    .editor-styles-wrapper:has(.wp-block-post-author-name) .kadence-header-row-inner {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+}
+
+/* No top padding on the header containers there (Kadence gives the desktop
+   one 30px and the tablet/mobile one 15px). */
+body.single-post .wp-block-kadence-header-desktop.kb-header-container,
+body.single-post .wp-block-kadence-header-tablet.kb-header-container,
+.editor-styles-wrapper:has(.wp-block-post-author-name) .wp-block-kadence-header-desktop.kb-header-container,
+.editor-styles-wrapper:has(.wp-block-post-author-name) .wp-block-kadence-header-tablet.kb-header-container {
+    padding-top: 0 !important;
+}
+
+/*
+ * Tablet & mobile: full-width buttons
+ *
+ * At 1024px and below every content button spans its container, with the
+ * label (and icon) centred: core Button blocks (Default, Outline, Alternative,
+ * iconic), Kadence Advanced Buttons, the contact form's Submit and the posts
+ * grid's "Read More". Left alone: anything in the site header (Contact button,
+ * menu), the Link style (a text link, not a button), and pagination/filter
+ * controls. `!important` beats core's width presets and Gravity Forms.
+ */
+@media (max-width: 1024px) {
+    /* The containers stretch too: in a Kadence column that aligns its content
+       left/right/centre, a Buttons block would otherwise shrink to its button. */
+    .wp-block-buttons:not(header *),
+    .wp-block-kadence-advancedbtn:not(header *) {
+        align-self: stretch;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    .wp-block-buttons > .wp-block-button:not(.is-style-link):not(header *),
+    .wp-block-button.mty-gform-button:not(header *) {
+        flex-basis: 100%;
+        width: 100% !important;
+        max-width: 100%;
+    }
+
+    .wp-block-button:not(.is-style-link):not(header *) > .wp-block-button__link {
+        box-sizing: border-box;
+        width: 100% !important;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .wp-block-kadence-advancedbtn:not(header *) > .kb-button {
+        flex-basis: 100%;
+        width: 100% !important;
+        justify-content: center;
+    }
+
+    .ipg-card--boxed .ipg-card__button {
+        align-self: stretch;
+        justify-content: center;
+    }
+}
