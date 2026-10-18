@@ -250,10 +250,6 @@ function mty_docs_render_page() {
 						__( 'Featured Image Background', 'mty' ),
 						__( 'Kadence Row Layout. Uses the current post’s featured image as the row’s background.', 'mty' ),
 					),
-					array(
-						__( 'Add Step Dot', 'mty' ),
-						__( 'Kadence Section → Advanced. The square dot on numbered step cards: on the top edge on desktop, on the left edge on tablet and mobile.', 'mty' ),
-					),
 				),
 				array( __( 'Setting', 'mty' ), __( 'Where and what it does', 'mty' ) )
 			);
