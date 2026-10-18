@@ -257,16 +257,19 @@ ul.is-style-mega-links-large a::after {
 }
 
 /* Parent item: "+" instead of Kadence's chevron, "−" while open; text and
-   sign Goblin while open. */
+   sign Goblin while open. Mega menu items and the plain dropdowns of the
+   desktop (horizontal) menu, e.g. Resources, share it. */
 .wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled > .kb-link-wrap {
     position: relative;
 }
 
-.wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled .kb-nav-dropdown-toggle-btn svg {
+.wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled .kb-nav-dropdown-toggle-btn svg,
+.wp-block-kadence-header .navigation-desktop-orientation-horizontal .kb-navigation > li.menu-item-has-children > .kb-link-wrap .kb-nav-dropdown-toggle-btn svg {
     display: none;
 }
 
-.wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled .kb-nav-dropdown-toggle-btn {
+.wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled .kb-nav-dropdown-toggle-btn,
+.wp-block-kadence-header .navigation-desktop-orientation-horizontal .kb-navigation > li.menu-item-has-children > .kb-link-wrap .kb-nav-dropdown-toggle-btn {
     align-items: center;
     justify-content: center;
     padding: 0;
@@ -277,16 +280,20 @@ ul.is-style-mega-links-large a::after {
     line-height: 1;
 }
 
-.wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled .kb-nav-dropdown-toggle-btn::before {
+.wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled .kb-nav-dropdown-toggle-btn::before,
+.wp-block-kadence-header .navigation-desktop-orientation-horizontal .kb-navigation > li.menu-item-has-children > .kb-link-wrap .kb-nav-dropdown-toggle-btn::before {
     content: "+";
 }
 
 .wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled:is(:hover, :focus-within, .menu-item--toggled-on) > .kb-link-wrap,
-.wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled:is(:hover, :focus-within, .menu-item--toggled-on) > .kb-link-wrap .kb-nav-link-content {
+.wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled:is(:hover, :focus-within, .menu-item--toggled-on) > .kb-link-wrap .kb-nav-link-content,
+.wp-block-kadence-header .navigation-desktop-orientation-horizontal .kb-navigation > li.menu-item-has-children:is(:hover, :focus-within, .menu-item--toggled-on) > .kb-link-wrap,
+.wp-block-kadence-header .navigation-desktop-orientation-horizontal .kb-navigation > li.menu-item-has-children:is(:hover, :focus-within, .menu-item--toggled-on) > .kb-link-wrap .kb-nav-link-content {
     color: var(--wp--preset--color--mty-goblin);
 }
 
-.wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled:is(:hover, :focus-within, .menu-item--toggled-on) .kb-nav-dropdown-toggle-btn::before {
+.wp-block-kadence-header .kb-navigation > li.kadence-menu-mega-enabled:is(:hover, :focus-within, .menu-item--toggled-on) .kb-nav-dropdown-toggle-btn::before,
+.wp-block-kadence-header .navigation-desktop-orientation-horizontal .kb-navigation > li.menu-item-has-children:is(:hover, :focus-within, .menu-item--toggled-on) > .kb-link-wrap .kb-nav-dropdown-toggle-btn::before {
     content: "\2212";
 }
 
