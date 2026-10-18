@@ -67,3 +67,34 @@ if ( ! function_exists( 'mty_register_blocks' ) ) :
 	}
 endif;
 add_action( 'init', 'mty_register_blocks' );
+
+
+if ( ! function_exists( 'mty_query_loop_exclude_current_post' ) ) :
+	/**
+	 * Leaves the post being read out of Query Loops of posts on a single post
+	 * (the "Keep reading." cards in the Single Posts template), so an article
+	 * never suggests itself. Only post queries are touched; other Query Loops on
+	 * the page (e.g. the Our Team list in the mega menu) are left alone.
+	 *
+	 * @param array    $query Query vars built from the Query Loop block.
+	 * @param WP_Block $block The Post Template block being rendered.
+	 * @return array Query vars.
+	 */
+	function mty_query_loop_exclude_current_post( $query, $block ) {
+		if ( ! is_singular( 'post' ) || ! empty( $block->context['query']['inherit'] ) ) {
+			return $query;
+		}
+
+		if ( 'post' !== ( $query['post_type'] ?? 'post' ) ) {
+			return $query;
+		}
+
+		$query['post__not_in'] = array_merge(
+			(array) ( $query['post__not_in'] ?? array() ),
+			array( get_queried_object_id() )
+		);
+
+		return $query;
+	}
+endif;
+add_filter( 'query_loop_block_query_vars', 'mty_query_loop_exclude_current_post', 10, 2 );

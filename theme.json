@@ -931,7 +931,7 @@
                             }
                         },
                         "typography": {
-                            "fontWeight": "700",
+                            "fontWeight": "inherit",
                             "lineHeight": "1.2",
                             "textDecoration": "none"
                         }
