@@ -57,6 +57,7 @@ Pick blocks in this order, and move down a level only when the level above can't
     - Icon (`mty/icon`)
     - Social Share (`mty/social-share`)
     - Timeline (`mty/timeline`, with `mty/timeline-step` children): a row of steps joined by one line, each marked by a 12px square dot, with any blocks below (number, heading, text). Use it for every numbered process/steps section. Settings: Steps, Columns (desktop; tablet and mobile always stack as a plain list: a White 15% divider per step, no dots, no highlight, as in the Figma mobile frames), Step gap and Content gap (both default 40px, as in Figma), colours (Dot & Line default `mty-white`, Highlighted Dot default `mty-goblin`), **Highlight line** and **Highlight on hover** (desktop: the hovered step takes the highlight colours from the highlighted step; its line keeps its normal 1px thickness). Turn on **Highlight step** on the step that is highlighted (the first, by default).
+        - Step content: one vertical Group with `blockGap: 24px` holding the number (`mty-heading-one`), an **h3 in `mty-title`** (fixed 24px) and the text; leave their margins unset. Content gap 40.
         - Practice-page style ("How the process works."): Highlight line **off**, so only the dot is coloured.
         - Homepage style ("How we move your case."): Highlight line **on** (the highlighted step's line becomes a 3px progress bar), **Highlight on hover on**, Highlighted Dot `mty-green-pea`, Highlighted Line `mty-goblin`.
     - Rating (`mty/rating`): SVG star rating with optional rating number.
@@ -190,7 +191,7 @@ The site is **dark by default**: the body background is `mty-background` (#06060
 | `mty-large`         | Text Large   | 18 → 22px |
 | `mty-medium`        | Text Medium  | 16 → 18px |
 
--   **Fixed text sizes:** `mty-lead` 20px (hero descriptions), `mty-regular` 16px (body), `mty-small` 14px, `mty-x-small` 12px. Fixed means not fluid: a custom size typed on a block (e.g. 20px) is turned into a fluid `clamp()` by WordPress, so always use these presets for fixed sizes.
+-   **Fixed text sizes:** `mty-title` 24px (Timeline step headings), `mty-lead` 20px (hero descriptions), `mty-regular` 16px (body), `mty-small` 14px, `mty-x-small` 12px. Fixed means not fluid: a custom size typed on a block (e.g. 20px) is turned into a fluid `clamp()` by WordPress, so always use these presets for fixed sizes.
 
 **Buttons** (core Button block):
 
