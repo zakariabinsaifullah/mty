@@ -1,11 +1,11 @@
 /* =============================================================================
    Posts Grid Shortcode — shortcode.css
 
-   The posts grid ([mty_posts_grid]) follows the "Start with these." design:
-   heading above a row of text category links, then white "boxed" cards
-   (image, category, title, outlined "Read More" pill) and a pagination footer
-   in the theme's button style. Colours come from theme presets (literal as
-   fallback).
+   The posts grid ([mty_posts_grid]) in the MTY style: a row of uppercase
+   category tabs on a faint rule (the active one Goblin with a 2px underline on
+   the rule, like the open mega menu item), square dark cards with a 1px White
+   15% border (image, category, title, "Read more →"), then a count and square
+   page buttons under another rule. Everything square, colours from presets.
    ============================================================================= */
 
 /* Wrapper */
@@ -25,46 +25,54 @@
 .ipg-header {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 24px;
     margin-bottom: 50px;
 }
 
-/* Size, family and weight come from `styles.elements.h2` in theme.json (52px
-   Alexandria Bold); colour restated so the card styles below can't override it. */
+/* Size, family and weight come from `styles.elements.h2` in theme.json. */
 .ipg-wrapper .ipg-heading {
     margin: 0;
     color: var(--wp--preset--color--mty-white, #ffffff);
 }
 
-/* Category links: plain text, the active one in orange. The negative margin
-   lines the first label up with the heading despite its 8px padding. */
+/* Category tabs: uppercase labels on a White 15% rule. */
 .ipg-nav {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    gap: 8px 24px;
-    margin-left: -8px;
+    align-items: flex-end;
+    gap: 0 32px;
+    border-bottom: 1px solid var(--wp--preset--color--mty-white-15, rgba(255, 255, 255, 0.15));
 }
 
 .ipg-nav .ipg-filter-btn {
     cursor: pointer;
+    margin: 0 0 -1px;
+    padding: 0 0 16px;
     background: none;
     border: none;
-    border-radius: 2px;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
     font-family: inherit;
-    font-size: var(--wp--preset--font-size--mty-medium, 18px);
-    font-weight: 400;
+    font-size: var(--wp--preset--font-size--mty-small, 14px);
+    font-weight: 600;
     line-height: 1.5;
-    color: var(--wp--preset--color--mty-white, #ffffff);
-    padding: 8px;
-    transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    color: var(--wp--preset--color--mty-white-60, rgba(255, 255, 255, 0.6));
+    transition:
+        color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.ipg-nav .ipg-filter-btn:hover,
+.ipg-nav .ipg-filter-btn:hover {
+    background: none;
+    color: var(--wp--preset--color--mty-white, #ffffff);
+}
+
 .ipg-nav .ipg-filter-btn.active {
     background: none;
     color: var(--wp--preset--color--mty-goblin, #3a8d3b);
+    border-bottom-color: var(--wp--preset--color--mty-goblin, #3a8d3b);
 }
 
 .ipg-nav .ipg-filter-btn:focus-visible {
@@ -83,23 +91,35 @@
 }
 
 .ipg-posts .ipg-no-posts {
-    color: #515353;
+    margin: 0;
+    color: var(--wp--preset--color--mty-white-60, rgba(255, 255, 255, 0.6));
     font-size: var(--wp--preset--font-size--mty-regular, 16px);
 }
 
 /* =============================================================================
-   Post Card
+   Post Card — square, 1px White 15% border, Goblin border on hover
    ============================================================================= */
 
 .ipg-card {
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
+    height: 100%;
+    border: 1px solid var(--wp--preset--color--mty-white-15, rgba(255, 255, 255, 0.15));
+    background: var(--wp--preset--color--mty-background, #060606);
+    transition: border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ipg-card:hover,
+.ipg-card:focus-within {
+    border-color: var(--wp--preset--color--mty-goblin, #3a8d3b);
 }
 
 .ipg-card__image {
     display: block;
     overflow: hidden;
-    aspect-ratio: 7 / 5;
+    aspect-ratio: 16 / 11;
+    border-bottom: 1px solid var(--wp--preset--color--mty-white-15, rgba(255, 255, 255, 0.15));
 }
 
 .ipg-card__image img {
@@ -107,10 +127,11 @@
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.35s ease;
+    border-radius: 0;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.ipg-card__image:hover img {
+.ipg-card:hover .ipg-card__image img {
     transform: scale(1.04);
 }
 
@@ -118,111 +139,81 @@
     display: flex;
     flex-direction: column;
     flex: 1;
-    background: #f7f6f3;
-    padding: 24px 16px;
+    gap: 24px;
+    padding: 32px;
+}
+
+.ipg-card__text {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ipg-card .ipg-card__category {
+    font-size: var(--wp--preset--font-size--mty-x-small, 12px);
+    font-weight: 600;
+    line-height: 1.5;
+    text-transform: uppercase;
+    color: var(--wp--preset--color--mty-goblin, #3a8d3b);
 }
 
 .ipg-card .ipg-card__title {
-    margin: 0 0 16px;
+    margin: 0;
     font-size: var(--wp--preset--font-size--mty-heading-six, 22px);
-    color: var(--wp--preset--color--mty-thunder, #231F20);
+    color: var(--wp--preset--color--mty-white, #ffffff);
 }
 
+/* The theme's link element style (Open Sans 400, 1.5) would otherwise win over
+   the heading's Alexandria 300 / 1.2. */
 .ipg-card .ipg-card__title a {
-    text-decoration: none;
+    font-family: inherit;
+    font-weight: inherit;
+    line-height: inherit;
     color: inherit;
-    transition: color 0.2s ease;
+    text-decoration: none;
+    transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .ipg-card .ipg-card__title a:hover {
     color: var(--wp--preset--color--mty-goblin, #3a8d3b);
 }
 
-/* =============================================================================
-   Boxed card — the posts grid
-
-   White card with a soft shadow: rounded image, then the category, title and
-   an outlined "Read More" pill pinned to the bottom so the buttons line up
-   across a row.
-   ============================================================================= */
-
-.ipg-card.ipg-card--boxed {
-    gap: 24px;
-    box-sizing: border-box;
-    height: 100%;
-    padding: 32px;
-    border-radius: 16px;
-    background: var(--wp--preset--color--mty-white, #ffffff);
-    box-shadow:
-        0 4px 8px -2px rgba(0, 0, 0, 0.1),
-        0 2px 4px -2px rgba(0, 0, 0, 0.06);
-}
-
-.ipg-card--boxed .ipg-card__image {
-    aspect-ratio: 8 / 5;
-    border-radius: 16px;
-}
-
-.ipg-card--boxed .ipg-card__body {
-    gap: 24px;
-    padding: 0;
-    background: none;
-}
-
-.ipg-card--boxed .ipg-card__text {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.ipg-card.ipg-card--boxed .ipg-card__category {
-    font-size: var(--wp--preset--font-size--mty-small, 14px);
-    line-height: 1.5;
-    letter-spacing: normal;
-    text-transform: none;
-    color: var(--wp--preset--color--mty-neutral-dark, #555555);
-}
-
-.ipg-card.ipg-card--boxed .ipg-card__title {
-    margin: 0;
-    font-size: var(--wp--preset--font-size--mty-heading-six, 22px);
-}
-
-/* The theme's link element style (Open Sans 400, 1.5) would otherwise win over the
-   heading's Alexandria 300 / 1.2. */
-.ipg-card.ipg-card--boxed .ipg-card__title a {
-    font-family: inherit;
-    font-weight: inherit;
-    line-height: inherit;
-}
-
-.ipg-card--boxed .ipg-card__button {
+/* "Read more →": the theme's button typography (14px / 600 / uppercase /
+   0.12em) as a text link, pinned to the bottom so the links line up across a
+   row. */
+.ipg-card .ipg-card__button {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     align-self: flex-start;
     margin-top: auto;
-    padding: 15px 31px;
-    border: 1px solid var(--wp--preset--color--mty-goblin, #3a8d3b);
-    border-radius: 100px;
-    color: var(--wp--preset--color--mty-goblin, #3a8d3b);
-    font-size: var(--wp--preset--font-size--mty-regular, 16px);
-    font-weight: 500;
+    font-size: var(--wp--preset--font-size--mty-small, 14px);
+    font-weight: 600;
     line-height: 1.3;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
     text-decoration: none;
-    transition:
-        background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-        color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.ipg-card--boxed .ipg-card__button svg {
-    flex-shrink: 0;
-}
-
-.ipg-card--boxed .ipg-card__button:hover,
-.ipg-card--boxed .ipg-card__button:focus-visible {
-    background: var(--wp--preset--color--mty-goblin, #3a8d3b);
     color: var(--wp--preset--color--mty-white, #ffffff);
+    transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* The arrow matches the theme buttons' "→" (Open Sans 16px / 400). */
+.ipg-card .ipg-card__arrow {
+    font-size: var(--wp--preset--font-size--mty-regular, 16px);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ipg-card .ipg-card__button:hover,
+.ipg-card .ipg-card__button:focus-visible,
+.ipg-card:hover .ipg-card__button {
+    color: var(--wp--preset--color--mty-goblin, #3a8d3b);
+}
+
+.ipg-card:hover .ipg-card__arrow {
+    transform: translateX(3px);
 }
 
 /* =============================================================================
@@ -236,8 +227,8 @@
     flex-wrap: wrap;
     gap: 24px;
     margin-top: 50px;
-    padding-top: 50px;
-    border-top: 1px solid var(--wp--preset--color--mty-neutral-lighter, #d8d8d8);
+    padding-top: 32px;
+    border-top: 1px solid var(--wp--preset--color--mty-white-15, rgba(255, 255, 255, 0.15));
 }
 
 /* No results (initially or after a filter): the count is what the footer hangs
@@ -249,9 +240,9 @@
 
 .ipg-footer .ipg-count {
     margin: 0;
-    font-size: var(--wp--preset--font-size--mty-regular, 16px);
+    font-size: var(--wp--preset--font-size--mty-small, 14px);
     line-height: 1.5;
-    color: var(--wp--preset--color--mty-white, #ffffff);
+    color: var(--wp--preset--color--mty-white-60, rgba(255, 255, 255, 0.6));
 }
 
 /* Keeps the pagination hard right when the count is empty. */
@@ -259,8 +250,8 @@
     margin-left: auto;
 }
 
-/* Page numbers are 44px pill buttons in the theme's button style: outlined at
-   rest, filled orange when active or hovered; Prev/Next widen to fit. */
+/* Square 44px page buttons with a White 15% border; the current page and the
+   hovered one fill Goblin. Prev/Next widen to fit and use the button type. */
 .ipg-pagination {
     display: flex;
     flex-wrap: wrap;
@@ -276,19 +267,25 @@
     box-sizing: border-box;
     min-width: 44px;
     height: 44px;
-    padding: 0 16px;
+    padding: 0 12px;
     background: transparent;
-    border: 1px solid var(--wp--preset--color--mty-neutral-lighter, #d8d8d8);
-    border-radius: 100px;
+    border: 1px solid var(--wp--preset--color--mty-white-15, rgba(255, 255, 255, 0.15));
+    border-radius: 0;
     color: var(--wp--preset--color--mty-white, #ffffff);
     font-family: inherit;
-    font-size: var(--wp--preset--font-size--mty-regular, 16px);
-    font-weight: 500;
+    font-size: var(--wp--preset--font-size--mty-small, 14px);
+    font-weight: 600;
     line-height: 1;
     transition:
         background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
         border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
         color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ipg-pagination .ipg-page-step {
+    padding: 0 20px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
 }
 
 .ipg-pagination .ipg-page-btn:hover,
@@ -309,8 +306,8 @@
     justify-content: center;
     min-width: 32px;
     height: 44px;
-    color: var(--wp--preset--color--mty-white, #ffffff);
-    font-size: var(--wp--preset--font-size--mty-regular, 16px);
+    color: var(--wp--preset--color--mty-white-60, rgba(255, 255, 255, 0.6));
+    font-size: var(--wp--preset--font-size--mty-small, 14px);
     user-select: none;
 }
 
@@ -322,11 +319,6 @@
     .ipg-grid {
         grid-template-columns: 1fr;
     }
-
-    .ipg-footer {
-        margin-top: 40px;
-        padding-top: 40px;
-    }
 }
 
 @media (max-width: 782px) {
@@ -335,7 +327,6 @@
         flex-wrap: nowrap;
         overflow-x: auto;
         max-width: 100%;
-        padding-bottom: 4px;
         scrollbar-width: none;
     }
 
@@ -344,15 +335,12 @@
     }
 
     .ipg-nav .ipg-filter-btn {
+        flex-shrink: 0;
         white-space: nowrap;
     }
 }
 
 @media (max-width: 560px) {
-    .ipg-grid {
-        grid-template-columns: 1fr;
-    }
-
     .ipg-footer {
         flex-direction: column;
         align-items: flex-start;

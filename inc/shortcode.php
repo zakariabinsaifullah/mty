@@ -37,8 +37,8 @@ endif;
 
 if ( ! function_exists( 'mty_posts_grid_render_post_item' ) ) :
 	/**
-	 * Renders a single post card: image, category, title and an outlined
-	 * "Read More" pill.
+	 * Renders a single post card: image, category, title and a "Read more →"
+	 * link.
 	 *
 	 * @param int    $post_id  Post ID.
 	 * @param string $taxonomy Taxonomy used for the category label.
@@ -58,7 +58,7 @@ if ( ! function_exists( 'mty_posts_grid_render_post_item' ) ) :
 		$terms    = get_the_terms( $post_id, $taxonomy );
 		$cat_name = ( $terms && ! is_wp_error( $terms ) ) ? $terms[0]->name : '';
 
-		$html = '<article class="ipg-card ipg-card--boxed">';
+		$html = '<article class="ipg-card">';
 
 		if ( $thumbnail ) {
 			$html .= '<a href="' . esc_url( $permalink ) . '" class="ipg-card__image" tabindex="-1" aria-hidden="true">' . $thumbnail . '</a>';
@@ -75,8 +75,8 @@ if ( ! function_exists( 'mty_posts_grid_render_post_item' ) ) :
 		$html .= '<a class="ipg-card__button" href="' . esc_url( $permalink ) . '" aria-label="' . esc_attr(
 			/* translators: %s: post title. */
 			sprintf( __( 'Read more: %s', 'mty' ), wp_strip_all_tags( $title ) )
-		) . '">' . esc_html__( 'Read More', 'mty' )
-			. '<svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M10 1l5 5-5 5M15 6H1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+		) . '">' . esc_html__( 'Read more', 'mty' )
+			. '<span class="ipg-card__arrow" aria-hidden="true">&rarr;</span>'
 			. '</a>';
 
 		$html .= '</div>';
