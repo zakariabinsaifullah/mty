@@ -1,0 +1,1 @@
+.mty-overlay-bg{position:relative}.mty-overlay-bg:after{background:var(--mty-overlay-bg);content:"";inset:0;pointer-events:none;position:absolute;z-index:0}.mty-overlay-bg>*{position:relative;z-index:1}

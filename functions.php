@@ -1,0 +1,63 @@
+<?php
+/**
+ * MTY — Theme Functions
+ *
+ * This file is intentionally kept as a loader only.
+ * All feature logic lives in the files under inc/.
+ *
+ * @link    https://developer.wordpress.org/themes/basics/theme-functions/
+ * @package MTY
+ * @since   1.0
+ */
+
+// ── Theme setup ────────────────────────────────────────────────────────────────
+require_once get_theme_file_path( 'inc/setup.php' );      // Post formats, editor style
+
+// ── Asset enqueueing ───────────────────────────────────────────────────────────
+require_once get_theme_file_path( 'inc/enqueue.php' );    // Frontend & block styles
+
+// ── Blocks ─────────────────────────────────────────────────────────────────────
+require_once get_theme_file_path( 'inc/blocks.php' );        // Custom block registration
+require_once get_theme_file_path( 'inc/block-styles.php' );  // Core block style variations
+require_once get_theme_file_path( 'inc/extensions.php' );    // Block editor extensions
+
+// ── Icon library ───────────────────────────────────────────────────────────────
+require_once get_theme_file_path( 'inc/my-icons.php' );      // Site-wide saved SVG icons
+
+// ── Editor taxonomy ────────────────────────────────────────────────────────────
+require_once get_theme_file_path( 'inc/categories.php' ); // Block & pattern categories
+
+// ── Block bindings ─────────────────────────────────────────────────────────────
+require_once get_theme_file_path( 'inc/bindings.php' );   // Dynamic block data sources
+
+// ── Post types ─────────────────────────────────────────────────────────────────
+require_once get_theme_file_path( 'inc/team.php' );         // Team CPT (attorney bio pages)
+
+// ── Gravity Forms ──────────────────────────────────────────────────────────────
+require_once get_theme_file_path( 'inc/gravity-forms.php' ); // Gravity Forms styles & submit button
+
+// ── Shortcodes ─────────────────────────────────────────────────────────────────
+require_once get_theme_file_path( 'inc/shortcode.php' ); // Posts grid shortcode
+
+// ── Documentation ──────────────────────────────────────────────────────────────
+require_once get_theme_file_path( 'inc/docs.php' );      // Appearance → MTY
+
+// ── Admin UI ───────────────────────────────────────────────────────────────────
+require_once get_theme_file_path( 'inc/admin.php' );     // Post ID column
+
+
+/**
+ * Set WordPress excerpt length to 25 words.
+ */
+function mty_excerpt_length( $length ) {
+    return 25;
+}
+add_filter( 'excerpt_length', 'mty_excerpt_length' );
+
+/**
+ * Customize excerpt more text.
+ */
+function mty_excerpt_more( $more ) {
+    return '...';
+}
+add_filter( 'excerpt_more', 'mty_excerpt_more' );
