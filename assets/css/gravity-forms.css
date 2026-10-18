@@ -194,6 +194,12 @@ label.gfield_label.gform-field-label {
     flex-wrap: nowrap !important;
 }
 
+/* No "(Required)" after the labels. The fields keep `aria-required`, so screen
+   readers still announce them as required. */
+.gform_wrapper .gfield_required {
+    display: none !important;
+}
+
 p.gform_required_legend {
     display: none !important;
 }
