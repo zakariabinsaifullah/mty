@@ -36,12 +36,12 @@
     --gf-ctrl-line-height: 56px;
     --gf-ctrl-font-size: 16px;
     --gf-ctrl-padding-x: 16px;
-    --gf-ctrl-radius: 4px;
+    --gf-ctrl-radius: 0;
     --gf-ctrl-select-icon-size: 12px;
 
     /* GF caps the radius on larger controls via `min()`, so the textarea would
        otherwise disagree with every other field. */
-    --gf-ctrl-radius-max-lg: 4px;
+    --gf-ctrl-radius-max-lg: 0;
 
     /* 8px between a label and its field. */
     --gf-label-space-primary: 8px;
@@ -55,8 +55,9 @@
 .gform-body.gform_body textarea,
 .gform-body.gform_body select {
     width: 100%;
-    border-color: var(--wp--preset--color--mty-neutral-lighter, #d8d8d8) !important;
-    background-color: #ffffff !important;
+    border-color: var(--wp--preset--color--mty-white-30, rgba(255, 255, 255, 0.3)) !important;
+    background-color: transparent !important;
+    color: var(--wp--preset--color--mty-white, #ffffff) !important;
     outline: none;
     box-shadow: none !important;
     transition:
@@ -84,7 +85,7 @@
 }
 
 .gfield_label {
-    color: var(--wp--preset--color--mty-neutral-darker, #191919) !important;
+    color: var(--wp--preset--color--mty-white, #ffffff) !important;
     font-size: var(--wp--preset--font-size--mty-medium, 18px) !important;
     font-weight: 600 !important;
     line-height: 1.5 !important;
@@ -92,14 +93,19 @@
 
 .gform_body input::placeholder,
 .gform_body textarea::placeholder {
-    color: var(--wp--preset--color--mty-neutral, #7f7f7f) !important;
+    color: var(--wp--preset--color--mty-white-50, rgba(255, 255, 255, 0.5)) !important;
+}
+
+/* Dropdown options open on the browser's light list, so give them dark text. */
+.gform_body select option {
+    color: var(--wp--preset--color--mty-thunder, #231F20);
 }
 
 .gform_body input:focus,
 .gform_body textarea:focus,
 .gform_body select:focus {
-    border-color: var(--wp--preset--color--mty-green-pea, #1E7444) !important;
-    outline-color: rgba(41, 51, 92, 0.15) !important;
+    border-color: var(--wp--preset--color--mty-white, #ffffff) !important;
+    outline: none !important;
 }
 
 /*
