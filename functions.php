@@ -33,8 +33,8 @@ require_once get_theme_file_path( 'inc/bindings.php' );   // Dynamic block data 
 // ── Post types ─────────────────────────────────────────────────────────────────
 require_once get_theme_file_path( 'inc/team.php' );         // Team CPT (attorney bio pages)
 
-// ── Form panel ─────────────────────────────────────────────────────────────────
-require_once get_theme_file_path( 'inc/form.php' );       // Slide-in form panel & settings
+// ── Gravity Forms ──────────────────────────────────────────────────────────────
+require_once get_theme_file_path( 'inc/gravity-forms.php' ); // Gravity Forms styles & submit button
 
 // ── Shortcodes ─────────────────────────────────────────────────────────────────
 require_once get_theme_file_path( 'inc/shortcode.php' ); // Posts grid shortcode

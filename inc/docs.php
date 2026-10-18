@@ -46,10 +46,10 @@ function mty_docs_admin_assets( $hook ) {
 		$version
 	);
 
-	// Same generic `.mty-copy-button` handler the Form Settings page uses.
+	// Generic `.mty-copy-button` handler.
 	wp_enqueue_script(
-		'mty-form-settings',
-		get_theme_file_uri( 'assets/js/form-settings.js' ),
+		'mty-copy-button',
+		get_theme_file_uri( 'assets/js/copy-button.js' ),
 		array(),
 		$version,
 		true
@@ -398,20 +398,6 @@ function mty_docs_render_page() {
 				<li><?php esc_html_e( 'Three columns on desktop, one on tablet and mobile. On small screens the category links scroll sideways.', 'mty' ); ?></li>
 				<li><?php esc_html_e( 'Under the cards: a count (“Showing 9 of 16 articles”) with the page numbers opposite it.', 'mty' ); ?></li>
 			</ul>
-		</div>
-
-		<!-- ── Contact panel ──────────────────────────────────────────────── -->
-		<div class="mty-docs-section">
-			<h2><?php esc_html_e( 'Contact panel', 'mty' ); ?> <code>#mty-contact</code></h2>
-			<p>
-				<?php
-				printf(
-					/* translators: %s: link to the Form Settings page. */
-					esc_html__( 'The slide-in contact form is set up under %s (phone number, title, description and the form shortcode). Any button or link pointing at #mty-contact opens it.', 'mty' ),
-					'<a href="' . esc_url( admin_url( 'themes.php?page=mty-form' ) ) . '">' . esc_html__( 'Appearance → Form', 'mty' ) . '</a>'
-				);
-				?>
-			</p>
 		</div>
 	</div>
 	<?php
