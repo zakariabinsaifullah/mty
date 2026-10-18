@@ -581,6 +581,12 @@
                 },
                 {
                     "fluid": false,
+                    "name": "Lead",
+                    "size": "20px",
+                    "slug": "mty-lead"
+                },
+                {
+                    "fluid": false,
                     "name": "Regular",
                     "size": "16px",
                     "slug": "mty-regular"
