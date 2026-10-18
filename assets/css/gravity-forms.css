@@ -164,6 +164,20 @@
         border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
+/* The theme's "→" after the label (blocks.css, "Button arrow"). Gravity Forms'
+   framework CSS clears `.button::after` content at a higher specificity, so it
+   is restated here. */
+.gform_wrapper .gform_button.button::after {
+    content: "\2192" !important;
+    display: inline !important;
+    margin-left: 12px !important;
+    font-size: var(--wp--preset--font-size--mty-regular, 16px) !important;
+    font-weight: 400 !important;
+    letter-spacing: 0 !important;
+    line-height: 1 !important;
+    text-transform: none !important;
+}
+
 /* Mirrors `styles.elements.button:hover`. */
 .gform_wrapper .gform_button.button:hover {
     background: var(--wp--preset--color--mty-goblin-dark, #2E702F) !important;
