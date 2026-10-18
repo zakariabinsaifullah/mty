@@ -52,6 +52,12 @@ $fig-border: 1px solid rgba(255, 255, 255, 0.25);
     max-width: 100%;
     line-height: 0;
 
+    // Images fill their column (blocks.css), so the frame does too, unless a
+    // width was picked in the Image block's settings.
+    .wp-block-image:not(.is-resized) > & {
+        width: 100%;
+    }
+
     > img,
     > a > img,
     > a {
@@ -94,6 +100,10 @@ $fig-border: 1px solid rgba(255, 255, 255, 0.25);
     position: relative;
     width: fit-content;
     max-width: 100%;
+
+    &:not(.is-resized) {
+        width: 100%;
+    }
 
     // fit-content would let the content layout's auto margins centre a narrow
     // image; keep it on the content column's left edge, as on the front end.
