@@ -31,14 +31,10 @@ require_once get_theme_file_path( 'inc/categories.php' ); // Block & pattern cat
 require_once get_theme_file_path( 'inc/bindings.php' );   // Dynamic block data sources
 
 // ── Post types ─────────────────────────────────────────────────────────────────
-require_once get_theme_file_path( 'inc/testimonials.php' ); // Testimonials CPT (no single view)
 require_once get_theme_file_path( 'inc/team.php' );         // Team CPT (attorney bio pages)
 
 // ── Form panel ─────────────────────────────────────────────────────────────────
 require_once get_theme_file_path( 'inc/form.php' );       // Slide-in form panel & settings
-
-// ── Estimate calculator ────────────────────────────────────────────────────────
-require_once get_theme_file_path( 'inc/estimate-calculator.php' ); // Pricing option & form hand-off
 
 // ── Shortcodes ─────────────────────────────────────────────────────────────────
 require_once get_theme_file_path( 'inc/shortcode.php' ); // Posts grid shortcode

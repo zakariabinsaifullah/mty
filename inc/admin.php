@@ -17,10 +17,9 @@ if ( ! function_exists( 'mty_admin_add_id_column' ) ) :
 	/**
 	 * Adds an ID column to the posts list table.
 	 *
-	 * The theme's shortcodes are addressed by post ID ([top_post id="…"],
-	 * [post_list ids="…"]), which otherwise means opening a post just to read the
-	 * number out of the address bar. Sits directly after the checkbox so it reads
-	 * as part of the row's identity rather than as data.
+	 * Saves opening a post just to read its ID out of the address bar. Sits
+	 * directly after the checkbox so it reads as part of the row's identity
+	 * rather than as data.
 	 *
 	 * @param array $columns List table columns.
 	 * @return array Columns with the ID column inserted.

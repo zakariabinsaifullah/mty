@@ -2,9 +2,10 @@
 /**
  * MTY — theme documentation page (Appearance → MTY).
  *
- * A guide to what the theme adds (posts grid shortcode, estimate calculator,
- * MTY blocks, contact panel), written for whoever is building pages rather
- * than for a developer. Keep it in step with inc/shortcode.php and the blocks.
+ * A guide to what the theme adds (MTY blocks, editor extensions, block styles,
+ * team members, posts grid shortcode, contact panel), written for whoever is
+ * building pages rather than for a developer. Keep it in step with the blocks,
+ * src/extensions, inc/block-styles.php, inc/team.php and inc/shortcode.php.
  *
  * @package MTY
  */
@@ -131,6 +132,37 @@ if ( ! function_exists( 'mty_docs_attr_table' ) ) :
 	}
 endif;
 
+if ( ! function_exists( 'mty_docs_info_table' ) ) :
+	/**
+	 * Outputs a two-column "name → what it does" table.
+	 *
+	 * @param array $rows    Each row: array( name, description ). The description
+	 *                       may contain inline HTML (<code>, <a>, <strong>).
+	 * @param array $headers The two column headings.
+	 */
+	function mty_docs_info_table( $rows, $headers ) {
+		?>
+		<table class="widefat striped mty-docs-table">
+			<thead>
+				<tr>
+					<?php foreach ( $headers as $header ) : ?>
+						<th scope="col"><?php echo esc_html( $header ); ?></th>
+					<?php endforeach; ?>
+				</tr>
+			</thead>
+			<tbody>
+				<?php foreach ( $rows as $row ) : ?>
+					<tr>
+						<td><strong><?php echo esc_html( $row[0] ); ?></strong></td>
+						<td><?php echo wp_kses_post( $row[1] ); ?></td>
+					</tr>
+				<?php endforeach; ?>
+			</tbody>
+		</table>
+		<?php
+	}
+endif;
+
 // ── Render docs page ──────────────────────────────────────────────────────────
 
 function mty_docs_render_page() {
@@ -141,15 +173,177 @@ function mty_docs_render_page() {
 	<div class="wrap mty-docs">
 		<h1><?php esc_html_e( 'MTY', 'mty' ); ?></h1>
 		<p class="mty-docs-intro">
-			<?php esc_html_e( 'A quick guide to what this theme adds: the posts grid shortcode, the estimate calculator, the MTY blocks and the contact panel.', 'mty' ); ?>
+			<?php esc_html_e( 'A quick guide to what this theme adds: the MTY blocks, the extra settings on core blocks, the block styles, team member pages, the posts grid shortcode and the contact panel.', 'mty' ); ?>
 		</p>
+
+		<!-- ── MTY blocks ────────────────────────────────────────────────── -->
+		<div class="mty-docs-section">
+			<h2><?php esc_html_e( 'MTY blocks', 'mty' ); ?></h2>
+			<p>
+				<?php esc_html_e( 'Find these in the block inserter under the MTY category.', 'mty' ); ?>
+			</p>
+
+			<?php
+			mty_docs_info_table(
+				array(
+					array(
+						__( 'Icon', 'mty' ),
+						__( 'An SVG icon, by default 20px and white in a 45×45px green box, optionally with a title beside it. Paste SVG code or pick an icon from the library; icons you paste can be saved under <strong>My Icons</strong> and reused anywhere on the site.', 'mty' ),
+					),
+					array(
+						__( 'Timeline', 'mty' ),
+						__( 'A row of numbered steps joined by one line, each marked by a square dot, with any blocks (number, heading, text) below each dot. Set the number of steps, columns, gaps and colours in the sidebar, and turn on <strong>Highlight step</strong> on the step to highlight. <strong>Highlight line</strong> makes that step’s line a thicker progress bar; <strong>Highlight on hover</strong> moves the highlight to the step under the mouse. On tablet and mobile the steps stack as a plain list.', 'mty' ),
+					),
+					array(
+						__( 'Rating', 'mty' ),
+						__( 'A star rating, optionally with the rating number beside it.', 'mty' ),
+					),
+					array(
+						__( 'Social Share', 'mty' ),
+						__( 'Sharing buttons for the current post, for single post templates.', 'mty' ),
+					),
+				),
+				array( __( 'Block', 'mty' ), __( 'What it does', 'mty' ) )
+			);
+			?>
+		</div>
+
+		<!-- ── Extra block settings ──────────────────────────────────────── -->
+		<div class="mty-docs-section">
+			<h2><?php esc_html_e( 'Extra block settings', 'mty' ); ?></h2>
+			<p>
+				<?php esc_html_e( 'The theme adds these options to core and Kadence blocks. Select the block and look in its sidebar (or toolbar, for Highlight).', 'mty' ); ?>
+			</p>
+
+			<?php
+			mty_docs_info_table(
+				array(
+					array(
+						__( 'Highlight', 'mty' ),
+						__( 'Text toolbar, the “A” button next to Bold and Italic. Makes the selected words semi-bold and green, as in “Meet <strong>James.</strong>”. Another MTY colour can be picked in its popover. Use it for coloured words in headings instead of colouring them by hand.', 'mty' ),
+					),
+					array(
+						__( 'Figure Frame', 'mty' ),
+						__( 'Image and Post Featured Image → Settings. The framed look from the design: a faint border, a dark overlay, white corner ticks and a “FIG. 02” label. Type the number into <strong>FIG value</strong> (leave it empty for no label) and switch off the parts the design leaves out. On Post Featured Image, <strong>Post title as label</strong> shows “[HEADSHOT: NAME]”, and a post without an image shows an empty framed box.', 'mty' ),
+					),
+					array(
+						__( 'Pointer', 'mty' ),
+						__( 'Group and Kadence Section → Settings. A thin white line from the block’s edge ending in a dot, pointing at the image beside it. Add it to the text side, not the image. Choose the direction, length, vertical position and size (Large: 18px dot with a green ring; Small: 10px white dot). Shown on desktop only.', 'mty' ),
+					),
+					array(
+						__( 'Icon Settings', 'mty' ),
+						__( 'Button. Buttons already end in a → arrow; turn on <strong>Add Icon to Button</strong> and paste SVG code only when the design shows a different icon, which then replaces the arrow.', 'mty' ),
+					),
+					array(
+						__( 'Hover Color', 'mty' ),
+						__( 'Any block with colour settings. Text, background and border colours on hover, and how fast they change.', 'mty' ),
+					),
+					array(
+						__( 'Text Max Width', 'mty' ),
+						__( 'Heading and Paragraph. Limits how wide the text runs, so long lines wrap where the design wraps them.', 'mty' ),
+					),
+					array(
+						__( 'Full Height, Overlay Background, Global Hover', 'mty' ),
+						__( 'Group. Stretch the group to its column’s height, lay a colour or gradient over its background, and change the colours of everything inside when the whole group is hovered (for example, a card).', 'mty' ),
+					),
+					array(
+						__( 'Featured Image Background', 'mty' ),
+						__( 'Kadence Row Layout. Uses the current post’s featured image as the row’s background.', 'mty' ),
+					),
+					array(
+						__( 'Add Step Dot', 'mty' ),
+						__( 'Kadence Section → Advanced. The square dot on numbered step cards: on the top edge on desktop, on the left edge on tablet and mobile.', 'mty' ),
+					),
+				),
+				array( __( 'Setting', 'mty' ), __( 'Where and what it does', 'mty' ) )
+			);
+			?>
+		</div>
+
+		<!-- ── Block styles ──────────────────────────────────────────────── -->
+		<div class="mty-docs-section">
+			<h2><?php esc_html_e( 'Block styles', 'mty' ); ?></h2>
+			<p>
+				<?php esc_html_e( 'Pick these under Styles in the block’s sidebar.', 'mty' ); ?>
+			</p>
+
+			<?php
+			mty_docs_info_table(
+				array(
+					array(
+						__( 'Button', 'mty' ),
+						__( '<strong>Default</strong>: green, uppercase, square, with a → arrow. <strong>Outline</strong>: the same with a transparent background and a thin border, for dark or image backgrounds. <strong>Alternative</strong>: light green background with dark green text. <strong>Link</strong>: a text link with the arrow.', 'mty' ),
+					),
+					array(
+						__( 'List', 'mty' ),
+						__( '<strong>Mega Links</strong> and <strong>Mega Links: Large</strong>, for the link lists in the mega menu panels.', 'mty' ),
+					),
+					array(
+						__( 'Post Template', 'mty' ),
+						__( '<strong>Card Grid</strong>, for Query Loop card grids: three columns of equal-height cards, a lone last card fills the row, one column on tablet and mobile.', 'mty' ),
+					),
+					array(
+						__( 'Group', 'mty' ),
+						__( '<strong>Plain Links</strong> (links inside aren’t underlined, e.g. an “On this page” list) and <strong>Wrap Mobile</strong> (a row that wraps on mobile).', 'mty' ),
+					),
+					array(
+						__( 'Accordion', 'mty' ),
+						__( '<strong>Numbered</strong>: numbers each item.', 'mty' ),
+					),
+				),
+				array( __( 'Block', 'mty' ), __( 'Styles', 'mty' ) )
+			);
+			?>
+		</div>
+
+		<!-- ── Team members ──────────────────────────────────────────────── -->
+		<div class="mty-docs-section">
+			<h2>
+				<?php
+				printf(
+					'<a href="%s">%s</a>',
+					esc_url( admin_url( 'edit.php?post_type=mty_team' ) ),
+					esc_html__( 'Team members', 'mty' )
+				);
+				?>
+			</h2>
+			<p>
+				<?php esc_html_e( 'Each attorney has their own page at /team/name/, built in the block editor like any page.', 'mty' ); ?>
+			</p>
+
+			<h3><?php esc_html_e( 'Adding a team member', 'mty' ); ?></h3>
+			<ol class="mty-docs-list mty-docs-list--ordered">
+				<li><?php esc_html_e( 'Go to Team → Add Team Member. Choose the Team Member Page layout when it is offered.', 'mty' ); ?></li>
+				<li><?php esc_html_e( 'Title: the full name. Excerpt: the short bio shown on team cards. Featured image: the headshot. Page Attributes → Order: their place in the team list.', 'mty' ); ?></li>
+				<li><?php esc_html_e( 'Fill in the Team details panel in the sidebar. The page’s name, intro line and facts fill themselves in from it, so don’t retype them.', 'mty' ); ?></li>
+				<li><?php esc_html_e( 'Edit, remove or duplicate the middle sections to match their page in the design, and renumber the “01 / 07” labels.', 'mty' ); ?></li>
+			</ol>
+
+			<?php
+			mty_docs_info_table(
+				array(
+					array( __( 'Short name', 'mty' ), __( 'First name used in links, e.g. “Read <strong>James’s</strong> bio”.', 'mty' ) ),
+					array( __( 'Highlighted name', 'mty' ), __( 'The part of the name shown in green, e.g. “Laura, Jr.”. Leave empty to highlight the last word.', 'mty' ) ),
+					array( __( 'Position, Office', 'mty' ), __( 'Shown above the name, e.g. “Founder, Fairhope, Alabama”.', 'mty' ) ),
+					array( __( 'Role, Licensed in, Cases, Practicing since', 'mty' ), __( 'The facts listed under the bio hero.', 'mty' ) ),
+				),
+				array( __( 'Team detail', 'mty' ), __( 'Where it shows', 'mty' ) )
+			);
+			?>
+
+			<div class="mty-docs-note">
+				<p>
+					<?php esc_html_e( 'To show a detail in any block, connect the block to the “Team member” source (block bindings) rather than typing it. This works on the member’s page and inside a Query Loop of team members.', 'mty' ); ?>
+				</p>
+			</div>
+		</div>
 
 		<!-- ── Posts grid ─────────────────────────────────────────────────── -->
 		<div class="mty-docs-section">
 			<h2><?php esc_html_e( 'Posts grid', 'mty' ); ?> <code>[mty_posts_grid]</code></h2>
 
 			<p>
-				<?php esc_html_e( 'A filterable, paginated grid of posts, used on the Resources page. Clicking a category or a page number swaps the cards in place, without reloading the page. Add it to a page with a Shortcode block.', 'mty' ); ?>
+				<?php esc_html_e( 'A filterable, paginated grid of posts. Clicking a category or a page number swaps the cards in place, without reloading the page. Add it to a page with a Shortcode block.', 'mty' ); ?>
 			</p>
 
 			<?php mty_docs_code( '[mty_posts_grid]', __( 'Simplest version: six posts, all categories, heading “All Insights.”', 'mty' ) ); ?>
@@ -187,13 +381,13 @@ function mty_docs_render_page() {
 
 			<?php
 			mty_docs_code(
-				'[mty_posts_grid title="Start with these." per_page="9" categories="6,7,8,9,10,11"]',
-				__( 'The Resources page: nine posts per page from six categories.', 'mty' )
+				'[mty_posts_grid title="Latest articles." per_page="9"]',
+				__( 'Nine posts per page with a different heading.', 'mty' )
 			);
 
 			mty_docs_code(
-				'[mty_posts_grid categories="tax-planning,valuation"]',
-				__( 'Only two categories, by slug.', 'mty' )
+				'[mty_posts_grid categories="personal-injury,car-accidents"]',
+				__( 'Only two categories, by slug (use your own category slugs or IDs).', 'mty' )
 			);
 
 			mty_docs_code(
@@ -208,123 +402,6 @@ function mty_docs_render_page() {
 				<li><?php esc_html_e( 'Three columns on desktop, one on tablet and mobile. On small screens the category links scroll sideways.', 'mty' ); ?></li>
 				<li><?php esc_html_e( 'Under the cards: a count (“Showing 9 of 16 articles”) with the page numbers opposite it.', 'mty' ); ?></li>
 			</ul>
-		</div>
-
-		<!-- ── Estimate calculator ────────────────────────────────────────── -->
-		<div class="mty-docs-section">
-			<h2><?php esc_html_e( 'Estimate calculator', 'mty' ); ?> <code><?php esc_html_e( 'Estimate Calculator block', 'mty' ); ?></code></h2>
-
-			<p>
-				<?php esc_html_e( 'Visitors switch services on or off, set their annual revenue and pick a frequency, and see a monthly estimate straight away. Used on the Pricing & Calculator page.', 'mty' ); ?>
-			</p>
-
-			<h3><?php esc_html_e( 'Changing the prices', 'mty' ); ?></h3>
-			<ol class="mty-docs-list mty-docs-list--ordered">
-				<li><?php esc_html_e( 'Open the page in the editor and click the calculator.', 'mty' ); ?></li>
-				<li><?php esc_html_e( 'In the sidebar, under Pricing, click “Edit pricing & services”.', 'mty' ); ?></li>
-				<li><?php esc_html_e( 'Make your changes; the calculator behind the window updates as you type. Click Done, then save the page.', 'mty' ); ?></li>
-			</ol>
-
-			<?php
-			mty_docs_attr_table(
-				array(
-					array(
-						__( 'Services', 'mty' ),
-						'Accounting, Bookkeeping, Fractional CFO',
-						__( 'Add, remove, rename and reorder services. Price each one by revenue band (a price table), as a base price plus an amount per slice of revenue, or as a flat monthly fee. Set a minimum and maximum price, and whether visitors can switch it off.', 'mty' ),
-					),
-					array(
-						__( 'Frequency options', 'mty' ),
-						'Monthly, Quarterly',
-						__( 'Per service. Each option charges a share of the monthly price (100% = full price). With only one option, no choice is shown.', 'mty' ),
-					),
-					array(
-						__( 'Revenue slider', 'mty' ),
-						'$0 – $2,000,000',
-						__( 'Lowest and highest values, step size and starting value; one slider for all services or one per service.', 'mty' ),
-					),
-					array(
-						__( 'Estimate', 'mty' ),
-						'$, nearest $50',
-						__( 'Currency symbol, rounding, a discount for taking several services, and what shows when the slider is at its highest (a message such as “Let’s talk”, or a normal price).', 'mty' ),
-					),
-				),
-				array( __( 'Setting', 'mty' ), __( 'Starts as', 'mty' ), __( 'What you can change', 'mty' ) )
-			);
-			?>
-
-			<div class="mty-docs-note">
-				<p>
-					<?php esc_html_e( 'Prices are shared: every Estimate Calculator on the site uses the same price list. Only administrators can change it.', 'mty' ); ?>
-				</p>
-			</div>
-
-			<h3><?php esc_html_e( 'Wording and layout', 'mty' ); ?></h3>
-			<p>
-				<?php esc_html_e( 'The block’s sidebar also holds the Steps (the three step names, or hide them), the Labels (slider and frequency labels, “Your Estimate”, “Per Month”, the asterisk) and the estimate panel’s colour. The Contact Us button, divider and text boxes inside the panel are ordinary blocks: click them to edit.', 'mty' ); ?>
-			</p>
-
-			<h3><?php esc_html_e( 'Where estimates arrive', 'mty' ); ?></h3>
-			<p>
-				<?php esc_html_e( 'When a visitor clicks a button in the estimate panel and then sends the contact form, their estimate and choices are saved with the form entry:', 'mty' ); ?>
-			</p>
-			<ul class="mty-docs-list">
-				<li><?php esc_html_e( 'as a note on the entry, under Forms → Entries;', 'mty' ); ?></li>
-				<li><?php esc_html_e( 'as an “Estimate” column you can switch on in the entries list;', 'mty' ); ?></li>
-				<li><?php esc_html_e( 'in notification emails: automatically where the email lists all fields, or anywhere you add the merge tag below.', 'mty' ); ?></li>
-			</ul>
-			<?php mty_docs_code( '{mty_estimate}', __( 'Merge tag for Gravity Forms notifications and confirmations.', 'mty' ) ); ?>
-		</div>
-
-		<!-- ── MTY blocks ────────────────────────────────────────────────── -->
-		<div class="mty-docs-section">
-			<h2><?php esc_html_e( 'MTY blocks', 'mty' ); ?></h2>
-			<p>
-				<?php esc_html_e( 'Find these in the block inserter under the MTY category.', 'mty' ); ?>
-			</p>
-
-			<table class="widefat striped mty-docs-table">
-				<thead>
-					<tr>
-						<th scope="col"><?php esc_html_e( 'Block', 'mty' ); ?></th>
-						<th scope="col"><?php esc_html_e( 'What it does', 'mty' ); ?></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td><?php esc_html_e( 'Icon', 'mty' ); ?></td>
-						<td><?php esc_html_e( 'An SVG icon in an orange box, optionally with a title beside it. Icons you paste can be saved under My Icons for reuse.', 'mty' ); ?></td>
-					</tr>
-					<tr>
-						<td><?php esc_html_e( 'Hover Card', 'mty' ); ?></td>
-						<td><?php esc_html_e( 'An image tile with an icon and heading; on hover (or tap) it turns orange and its description slides in.', 'mty' ); ?></td>
-					</tr>
-					<tr>
-						<td><?php esc_html_e( 'Stacking Cards', 'mty' ); ?></td>
-						<td><?php esc_html_e( 'Cards that pin and stack on top of each other as the page scrolls, on desktop. Put one Row Layout inside per card.', 'mty' ); ?></td>
-					</tr>
-					<tr>
-						<td><?php esc_html_e( 'Testimonials Marquee', 'mty' ); ?></td>
-						<td>
-							<?php
-							printf(
-								/* translators: %s: link to the Testimonials list. */
-								esc_html__( 'An endlessly scrolling row of testimonials. Add and edit them under %s: the title is the name, the content is the quote, the featured image is the photo.', 'mty' ),
-								'<a href="' . esc_url( admin_url( 'edit.php?post_type=mty_testimonial' ) ) . '">' . esc_html__( 'Testimonials', 'mty' ) . '</a>'
-							);
-							?>
-						</td>
-					</tr>
-					<tr>
-						<td><?php esc_html_e( 'Estimate Calculator', 'mty' ); ?></td>
-						<td><?php esc_html_e( 'The pricing calculator described above.', 'mty' ); ?></td>
-					</tr>
-					<tr>
-						<td><?php esc_html_e( 'Social Share', 'mty' ); ?></td>
-						<td><?php esc_html_e( 'Sharing buttons for the current post, for single post templates.', 'mty' ); ?></td>
-					</tr>
-				</tbody>
-			</table>
 		</div>
 
 		<!-- ── Contact panel ──────────────────────────────────────────────── -->
